@@ -1,4 +1,4 @@
-import Image from "../../nillkin-case-1.jpg";
+import Image from "../../landing/banner0_real.jpg";
 import RelatedProduct from "./RelatedProduct";
 import Ratings from "react-ratings-declarative";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ function ProductDetail() {
             </a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Nillkin iPhone X cover
+           Astım Tuz Lambası
           </li>
         </ol>
       </nav>
@@ -86,40 +86,40 @@ function ProductDetail() {
 
         <div className="col-lg-5">
           <div className="d-flex flex-column h-100">
-            <h2 className="mb-1">Nillkin iPhone X cover</h2>
+            <h2 className="mb-1">Astım Tuz Lambası</h2>
             <h4 className="text-muted mb-4">10000 Ks</h4>
 
             <div className="row g-3 mb-4">
               <div className="col">
                 <button className="btn btn-outline-dark py-2 w-100">
-                  Add to cart
+                  Sepete Ekle
                 </button>
               </div>
               <div className="col">
-                <button className="btn btn-dark py-2 w-100">Buy now</button>
+                <button className="btn btn-dark py-2 w-100">Satın al</button>
               </div>
             </div>
 
-            <h4 className="mb-0">Details</h4>
+            <h4 className="mb-0">Özellikleri</h4>
             <hr />
             <dl className="row">
-              <dt className="col-sm-4">Code</dt>
+              <dt className="col-sm-4">Kodu</dt>
               <dd className="col-sm-8 mb-3">C0001</dd>
 
-              <dt className="col-sm-4">Category</dt>
-              <dd className="col-sm-8 mb-3">Cases & Covers</dd>
+              <dt className="col-sm-4">Kategori</dt>
+              <dd className="col-sm-8 mb-3">Tuz Lambası</dd>
 
-              <dt className="col-sm-4">Brand</dt>
-              <dd className="col-sm-8 mb-3">iPhone X</dd>
+              <dt className="col-sm-4">Tür</dt>
+              <dd className="col-sm-8 mb-3">Astım</dd>
 
-              <dt className="col-sm-4">Manufacturer</dt>
-              <dd className="col-sm-8 mb-3">Nillkin</dd>
+              <dt className="col-sm-4">Üretici</dt>
+              <dd className="col-sm-8 mb-3">Zühre</dd>
 
-              <dt className="col-sm-4">Color</dt>
-              <dd className="col-sm-8 mb-3">Red, Green, Blue, Pink</dd>
+              <dt className="col-sm-4">Renkler</dt>
+              <dd className="col-sm-8 mb-3">Kırmızı</dd>
 
-              <dt className="col-sm-4">Status</dt>
-              <dd className="col-sm-8 mb-3">Instock</dd>
+              <dt className="col-sm-4">Durum</dt>
+              <dd className="col-sm-8 mb-3">Stokta var</dd>
 
               <dt className="col-sm-4">Rating</dt>
               <dd className="col-sm-8 mb-3">
@@ -144,19 +144,31 @@ function ProductDetail() {
               </dd>
             </dl>
 
-            <h4 className="mb-0">Description</h4>
+            <h4 className="mb-0">Açıklama</h4>
             <hr />
             <p className="lead flex-shrink-0">
               <small>
-                Nature (TPU case) use environmental non-toxic TPU, silky smooth
-                and ultrathin. Glittering and translucent, arbitrary rue
-                reserved volume button cutouts, easy to operate. Side frosted
-                texture anti-slipping, details show its concern; transparent
-                frosted logo shows its taste. The release of self, the flavor of
-                life. Nillkin launched Nature transparent soft cover, only to
-                retain the original phone style. Subverting tradition,
-                redefinition. Thinner design Environmental texture better hand
-                feeling.
+              Dekoratif  Tuz Lambası
+
+- Kablo ve ampulü takılı gelmektedir.
+
+- 10-12 m2 oda için yeterlidir.
+
+Tuz lambasının faydaları saymakla bitmez. Kaya tuzu ısındığı zaman negatif iyon yayar. Negatif iyonlar çok faydalıdır. Yatak odası, oturma odası, Çocuk odası ve İş yerlerinizde kullanabilirsiniz.
+
+- Astım, Bronşit, Nefes darlığına iyi gelir.
+
+- Horlama sorununun giderilmesine ve uyku kalitesinin artmasına yardımcı olur
+
+- Havadaki koku nem ve radyasyonu azaltır, rahat bir uyku ortamı sağlar.
+
+- Havadaki tozları bakterileri temizler.
+
+- Boğazı ferahlatır öksürüğü azaltır.
+
+- Bağışıklık sistemini güçlendirir.
+
+Çankırı Kaya Tuzu lambası dekoratif ve şık bir görüntüye sahiptir. Hem şık hemde inanılmaz faydalı olan Çankırı tuz lambası son zamanlarda insanların gözdesi olmuştur.
               </small>
             </p>
           </div>

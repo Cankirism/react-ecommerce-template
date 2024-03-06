@@ -26,7 +26,7 @@ function Header() {
               className="ms-1"
               size="lg"
             />
-            <span className="ms-2 h5">Shop</span>
+            <span className="ms-2 h5">Zühre Tuz Lambacısı</span>
           </Link>
 
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
