@@ -23,7 +23,7 @@ function Product(props) {
       </>
     );
   }
-
+let b ="";
   return (
     <div className="col">
       <div className="card shadow-sm">
