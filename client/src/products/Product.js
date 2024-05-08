@@ -13,7 +13,7 @@ function Product(props) {
         className="badge bg-dim py-2 text-white position-absolute"
         style={{ top: "0.5rem", right: "0.5rem" }}
       >
-        {props.percentOff}% OFF
+       % {props.percentOff} indirimli
       </div>
     );
 
@@ -33,17 +33,17 @@ let b ="";
             className="card-img-top bg-dark cover"
             height="200"
             alt=""
-            src={Image}
+            src={props.product.tumbrImage}
           />
         </Link>
         <div className="card-body">
           <h5 className="card-title text-center text-dark text-truncate">
-            Nillkin iPhone X cover
+            {props.product.name}
           </h5>
-          <p className="card-text text-center text-muted mb-0">{offPrice}</p>
+          <p className="card-text text-center text-muted mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
             <button className="btn btn-outline-dark mt-3">
-              <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Add to cart
+              <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Sepete Ekle
             </button>
           </div>
         </div>

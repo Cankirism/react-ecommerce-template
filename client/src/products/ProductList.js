@@ -4,25 +4,24 @@ import ProductH from "./ProductH";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
-
+import { useEffect } from "react";
+import { getTopProducts } from "../api/api";
 const categories = [
-  "All Products",
-  "Phones & Tablets",
-  "Cases & Covers",
-  "Screen Guards",
-  "Cables & Chargers",
-  "Power Banks",
+  "Tuz Lambası",
+  "Tuz Ürünleri"
+  
 ];
 
-const brands = ["Apple", "Samsung", "Google", "HTC"];
+ 
 
-const manufacturers = ["HOCO", "Nillkin", "Remax", "Baseus"];
+const manufacturers = ["Zühre"];
 
 function FilterMenuLeft() {
+ 
   return (
     <ul className="list-group list-group-flush rounded">
       <li className="list-group-item d-none d-lg-block">
-        <h5 className="mt-1 mb-2">Browse</h5>
+        <h5 className="mt-1 mb-2">Ürünler</h5>
         <div className="d-flex flex-wrap my-2">
           {categories.map((v, i) => {
             return (
@@ -38,7 +37,7 @@ function FilterMenuLeft() {
           })}
         </div>
       </li>
-      <li className="list-group-item">
+      {/* <li className="list-group-item">
         <h5 className="mt-1 mb-1">Brands</h5>
         <div className="d-flex flex-column">
           {brands.map((v, i) => {
@@ -52,9 +51,9 @@ function FilterMenuLeft() {
             );
           })}
         </div>
-      </li>
+      </li> */}
       <li className="list-group-item">
-        <h5 className="mt-1 mb-1">Manufacturers</h5>
+        <h5 className="mt-1 mb-1">Üretici</h5>
         <div className="d-flex flex-column">
           {manufacturers.map((v, i) => {
             return (
@@ -69,7 +68,7 @@ function FilterMenuLeft() {
         </div>
       </li>
       <li className="list-group-item">
-        <h5 className="mt-1 mb-2">Price Range</h5>
+        <h5 className="mt-1 mb-2">Fiyat Aralığı</h5>
         <div className="d-grid d-block mb-3">
           <div className="form-floating mb-2">
             <input
@@ -78,7 +77,7 @@ function FilterMenuLeft() {
               placeholder="Min"
               defaultValue="100000"
             />
-            <label htmlFor="floatingInput">Min Price</label>
+            <label htmlFor="floatingInput">En az</label>
           </div>
           <div className="form-floating mb-2">
             <input
@@ -87,9 +86,9 @@ function FilterMenuLeft() {
               placeholder="Max"
               defaultValue="500000"
             />
-            <label htmlFor="floatingInput">Max Price</label>
+            <label htmlFor="floatingInput">En Çok</label>
           </div>
-          <button className="btn btn-dark">Apply</button>
+          <button className="btn btn-dark">Ara</button>
         </div>
       </li>
     </ul>
@@ -98,6 +97,14 @@ function FilterMenuLeft() {
 
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
+  const [products,setProducts]=useState([]);
+  useEffect(async()=>{
+    const prdct =await getTopProducts(); 
+
+    setProducts(prdct.data);
+    console.log("prd changed")
+
+  },[])
 
   function changeViewType() {
     setViewType({
@@ -116,12 +123,10 @@ function ProductList() {
               to="/products"
               replace
             >
-              All Prodcuts
+              Tüm Ürünler
             </Link>
           </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Cases &amp; Covers
-          </li>
+         
         </ol>
       </nav>
 
@@ -222,7 +227,7 @@ function ProductList() {
                 (viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2")
               }
             >
-              {Array.from({ length: 10 }, (_, i) => {
+              {/* {Array.from({ length: 10 }, (_, i) => {
                 if (viewType.grid) {
                   return (
                     <Product key={i} percentOff={i % 2 === 0 ? 15 : null} />
@@ -231,7 +236,24 @@ function ProductList() {
                 return (
                   <ProductH key={i} percentOff={i % 4 === 0 ? 15 : null} />
                 );
-              })}
+              })} */}
+              {
+                products.map((prd)=>{
+
+                  if(viewType.grid){
+                    return (
+                      <Product key={prd._id} percentOff="20" product={prd} />
+                    );
+                  }
+                  return (
+                    <ProductH key={prd._id} percentOff="20" product={prd} />
+                  );
+
+                }
+
+                  
+                )
+              }
             </div>
             <div className="d-flex align-items-center mt-auto">
               <span className="text-muted small d-none d-md-inline">
