@@ -183,6 +183,7 @@ app.get("/api/allproducts",async(req,res)=>{
 })
 
 app.get("/api/popular",async(req,res)=>{
+  let b="";
   try{
     const topProducts = await product.find().limit(4);
     res.status(200).send(topProducts);
