@@ -1,5 +1,6 @@
 {
     "name": "index",
+    "homepage": "https://react-ecommerce-template-backend.vercel.app/",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
