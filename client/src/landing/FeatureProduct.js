@@ -12,7 +12,7 @@ function FeatureProduct(props) {
           height="250"
           alt=""
           src={Image}
-          style={{aspectRatio:'1/1'}}
+         
         />
         <div className="card-body">
           <h5 className="card-title text-center">{props.product.name}</h5>
