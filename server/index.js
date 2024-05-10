@@ -192,7 +192,9 @@ app.use(cors());
 //     res.status(400).send("hata olustu",err);
 //   }
 // })
-
+app.get("/",(req,res)=>{
+  res.status(200).send("çalışıyorum");
+})
 //#region images
 const imageSchema = mongoose.Schema({
   productId : String,
