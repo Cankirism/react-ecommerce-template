@@ -4,10 +4,14 @@ import { Switch, Route } from "react-router-dom";
 import Landing from "./landing/Landing";
 import ProductList from "./products/ProductList";
 import AddProduct from "./products/AddProduct";
+import CartContext, { CartContextProvider } from "./context/CartContextProvier";
+import CartView from "./cart/CartView";
+import { useContext } from "react";
 function App() {
+  
   return (
-    <Template>
-      
+    <CartContextProvider>
+      <Template>
         <Route path="/products" exact>
           <ProductList />
         </Route>
@@ -17,11 +21,15 @@ function App() {
         <Route path="/products/:slug">
           <ProductDetail />
         </Route>
+       <Route path="/cart">
+        <CartView/>
+       </Route>
         <Route path="/" exact>
           <Landing />
         </Route>
-      
-    </Template>
+       
+      </Template>
+    </CartContextProvider>
   );
 }
 

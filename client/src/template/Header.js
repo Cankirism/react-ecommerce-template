@@ -1,11 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link,useHistory } from "react-router-dom";
+import { useContext, useState } from "react";
+import CartContext from "../context/CartContextProvier";
+import { useEffect } from "react";
 
 function Header() {
-
+  
   const [openedDrawer, setOpenedDrawer] = useState(false)
-
+ 
+  const history = useHistory();
+  const [cartItems,setCartItems]=useState([]);
+  const context = useContext(CartContext);
+  useEffect(()=>{
+   
+  })
+  const handleClick=()=>{
+    console.log("spet tıklandı")
+    history.push("/cart")
+  }
   function toggleDrawer() {
     setOpenedDrawer(!openedDrawer);
   }
@@ -37,9 +49,9 @@ function Header() {
                 </Link>
               </li>
             </ul>
-            <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
+            <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline" onClick={handleClick}>
               <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-              <span className="ms-3 badge rounded-pill bg-dark">0</span>
+              <span className="ms-3 badge rounded-pill bg-dark">{context.cart.length}</span>
             </button>
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item dropdown">
@@ -74,9 +86,9 @@ function Header() {
           </div>
 
           <div className="d-inline-block d-lg-none">
-            <button type="button" className="btn btn-outline-dark">
+            <button type="button" className="btn btn-outline-dark" onClick={handleClick}>
               <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-              <span className="ms-3 badge rounded-pill bg-dark">0</span>
+              <span className="ms-3 badge rounded-pill bg-dark">{context.cart.length}</span>
             </button>
             <button className="navbar-toggler p-0 border-0 ms-3" type="button" onClick={toggleDrawer}>
               <span className="navbar-toggler-icon"></span>

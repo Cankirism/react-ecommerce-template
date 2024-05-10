@@ -1,12 +1,13 @@
 import Image from "../nillkin-case-1.jpg";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import CartContext from "../context/CartContextProvier";
+import { useContext } from "react";
 function Product(props) {
   const price = 10000;
   let percentOff;
   let offPrice = `${price}Ks`;
-
+const context = useContext(CartContext);
   if (props.percentOff && props.percentOff > 0) {
     percentOff = (
       <div
@@ -23,11 +24,11 @@ function Product(props) {
       </>
     );
   }
-let b ="";
+
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <Link to="/products/1" href="!#" replace>
+        <Link to={`/products/${props.product._id}`} href="!#" replace>
           {percentOff}
           <img
             className="card-img-top bg-dark cover"
@@ -42,7 +43,9 @@ let b ="";
           </h5>
           <p className="card-text text-center text-muted mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
-            <button className="btn btn-outline-dark mt-3">
+            <button className="btn btn-outline-dark mt-3"
+            onClick={()=>context.updateCart(props.product)}
+            >
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Sepete Ekle
             </button>
           </div>
