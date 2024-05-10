@@ -169,7 +169,7 @@ app.get("/api/product/:id", async (req, res) => {
 
 
 app.get("/api/allproducts",async(req,res)=>{
- let c ="";
+ 
   try{
     console.log("top siz çağrısı geldi");
     let topSixProducts = await product.find();
