@@ -9,7 +9,7 @@ function FeatureProduct(props) {
       <div className="card shadow-sm">
         <img
           className="card-img-top bg-dark cover"
-          height="250"
+          height="100"
           alt=""
           src={product.tumbrImage}
           style={{aspectRatio:'1/1'}}
