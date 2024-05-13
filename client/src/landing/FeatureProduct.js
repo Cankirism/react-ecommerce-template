@@ -11,7 +11,7 @@ function FeatureProduct(props) {
           className="card-img-top bg-dark cover"
           height="250"
           alt=""
-          src={Image}
+          src={props.product.tumbrImage}
          
         />
         <div className="card-body">

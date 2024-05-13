@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const baseUrl="http://localhost:5801/api";
+export const baseUrl="https://tuz-rust.vercel.app/api";
 
 const api = axios.create({
     baseURL:baseUrl
