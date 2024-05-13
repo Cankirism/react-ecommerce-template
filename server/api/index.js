@@ -8,6 +8,17 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const { error } = require("console");
 require("dotenv").config();
 const cors = require("cors");
+const app = express();
+const options = [
+	cors({
+		origin:'*'
+		
+		
+	})
+
+];
+app.use(options);
+app.use(express.json({ limit: '50mb' }));
 
 const mongoDb = process.env.MONGODB_URL;
 try {
