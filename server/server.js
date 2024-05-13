@@ -6,7 +6,7 @@ const app = express();
 // app.use(bodyParser.json());
 // app.use(cors());
 
-app.get("/",(req,res)=>{
+app.get("/api",(req,res)=>{
   console.log("ayaktayım")
   res.status(200).send("çalışıyorum");
 })
