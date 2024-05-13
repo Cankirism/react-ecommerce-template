@@ -1,13 +1,13 @@
 {
     "name": "ecommerce-backend",
-    "homepage": "https://react-ecommerce-template-5zpl.vercel.app/",
+    "homepage": "https://tuz-rust.vercel.app//",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "/api/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js",
-        "server": "nodemon server.js"
+        "start": "node api/index.js",
+        "server": "nodemon api/index.js"
     },
     "keywords": [],
     "author": "",
