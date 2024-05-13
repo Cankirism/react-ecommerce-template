@@ -7,6 +7,7 @@ const app = express();
 // app.use(cors());
 
 app.get("/",(req,res)=>{
+  console.log("ayaktayım")
   res.status(200).send("çalışıyorum");
 })
 
