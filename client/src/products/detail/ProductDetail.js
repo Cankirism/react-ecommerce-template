@@ -202,6 +202,8 @@ const context = useContext(CartContext);
               <dd className="col-sm-8 mb-3">{
                 currentProduct.piece>0?"Stokta Var":"Ürün Tükendi"
               }</dd>
+              <dt className="col-sm-4">Fiyatı</dt>
+              <dd className="col-sm-8 mb-3">{currentProduct.price} TL</dd>
 
               <dt className="col-sm-4">Rating</dt>
               <dd className="col-sm-8 mb-3">

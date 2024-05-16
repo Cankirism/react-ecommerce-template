@@ -7,12 +7,16 @@ import { useEffect } from "react";
 function Header() {
   
   const [openedDrawer, setOpenedDrawer] = useState(false)
- 
+  const [isLoggedIn,setIsloggedIn]=useState(false);
   const history = useHistory();
   const [cartItems,setCartItems]=useState([]);
   const context = useContext(CartContext);
   useEffect(()=>{
-   
+   const hasLoginInfo = sessionStorage.getItem("isLogged");
+   if(hasLoginInfo)
+    {
+      setIsloggedIn(true);
+    }
   })
   const handleClick=()=>{
     console.log("spet tıklandı")
@@ -44,9 +48,15 @@ function Header() {
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
-                <Link to="/products" className="nav-link" replace onClick={changeNav}>
-                  Explore
+                {
+                 isLoggedIn&&(
+                  <Link to="/addproduct" className="nav-link" replace>
+                  Ürün ekle
                 </Link>
+
+                 )
+                }
+               
               </li>
             </ul>
             <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline" onClick={handleClick}>
@@ -71,7 +81,7 @@ function Header() {
                   aria-labelledby="userDropdown"
                 >
                   <li>
-                    <Link to="/" className="dropdown-item" onClick={changeNav}>
+                    <Link to="/login" className="dropdown-item" onClick={changeNav}>
                       Login
                     </Link>
                   </li>

@@ -20,8 +20,8 @@
             >
                 <div style={{marginBottom:"5vh"}}>
                     <div className="row">
-                        <div className="col"><h4><b>Shopping Cart</b></h4></div>
-                        <div className="col align-self-center text-right text-muted">3 items</div>
+                        <div className="col"><h6><b>Sepetteki Ürünler</b></h6></div>
+                        <div className="col align-self-center text-right text-muted">{context.cart.length} ürün</div>
                     </div>
                 </div>  
                 {
@@ -35,7 +35,7 @@
                             <div className="row">{item.name}</div>
                         </div>
                         <div className="col">
-                            <button className="btn btn-outline-dark">-</button>4
+                            <button className="btn btn-outline-dark">-</button>1
                             <button className="btn btn-outline-dark">+</button>
                           
                         </div>
