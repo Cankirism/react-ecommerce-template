@@ -8,6 +8,7 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const { error } = require("console");
 require("dotenv").config();
 const cors = require("cors");
+
 const app = express();
 const options = [
 	cors({
@@ -118,6 +119,8 @@ app.get("/image/:productId", async (req, res) => {
   }
 });
 //#endregion
+//#region product
+
 const productSchema = mongoose.Schema({
   name: String,
   brand: String,
@@ -195,7 +198,7 @@ app.get("/api/popular",async(req,res)=>{
     res.status(400).send("hata olustu",err);
   }
 })
-
+//#endregion
 //#region images
 const imageSchema = mongoose.Schema({
   productId : String,
@@ -249,6 +252,59 @@ app.get("/api/images/:productId",async(req,res)=>{
 
 })
 
-app.listen(5801, () => console.log("server started on port 5801"));
+//#endregion
+
+//#region user
+const userSchema = mongoose.Schema({
+  email:String,
+  password:String,
+  isActive:Boolean
+})
+
+const user = mongoose.model("users",userSchema);
+app.post("/api/user",async(req,res)=>{
+  try{
+    console.log("user ekleme isteği geldi",req.body)
+    const newUser = new user(req.body);
+    let result = await newUser.save();
+    console.log(result);
+    result = result.toObject();
+    if(result){
+      res.status(200).send("kullanıcı kaydedildi")
+    }
+    else {
+      res.status(400).send("hata");
+    }
+  }
+  catch(err){
+    res.status(400).send("hata",err);
+  }
+ 
+})
+app.post("/api/login",async(req,res)=>{
+  try{
+    console.log("user is ",req.body);
+ 
+    const loginResult = await user.findOne({email: 'faruk.gungor@hotmail.com'})
+
+    if(loginResult){
+     
+      res.status(200).send("login başarılı");
+     
+    }
+    else{
+      res.status(400).send("username or password error");
+    }
+
+  }catch(err){
+    res.status(400).send("hata",err);
+  }
+ 
+  // const loginResult = await user.findOne({email:`${req.body.email}`,password:`${req.body.password}`})
+
+})
+//#endregion
+
+app.listen(5802, () => console.log("server started on port 5801"));
 
 
