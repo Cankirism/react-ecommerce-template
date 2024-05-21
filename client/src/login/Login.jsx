@@ -2,9 +2,10 @@ import { useFormik } from "formik";
 import bcrypt from "bcryptjs-react"
 import { loginn } from "../api/api";
 import { HttpStatusCode } from "axios";
-
+import {useHistory} from "react-router-dom"
 
 const Login = () => {
+  const history= useHistory();
   
     const formik = useFormik({
         initialValues:{
@@ -20,10 +21,7 @@ const Login = () => {
                  console.log("api result is ",apiResult);
                  if(apiResult.status===HttpStatusCode.Ok){
                     sessionStorage.setItem("isLogged",true);
-        
-                   
-                    
-
+                    history.push("/");
                  }
 
             }
