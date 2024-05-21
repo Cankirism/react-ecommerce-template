@@ -8,6 +8,7 @@ import CartContext, { CartContextProvider } from "./context/CartContextProvier";
 import CartView from "./cart/CartView";
 import { useContext } from "react";
 import Login from "./login/Login.jsx";
+import DeleteProduct from "./products/DeleteProduct.jsx";
 function App() {
   
   return (
@@ -31,7 +32,9 @@ function App() {
        <Route path="/cart">
         <CartView/>
        </Route>
-      
+      <Route path="/delete">
+        <DeleteProduct />
+      </Route>
         <Route path="/" exact>
           
           <Landing />

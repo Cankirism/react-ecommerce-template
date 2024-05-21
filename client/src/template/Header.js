@@ -42,7 +42,7 @@ function Header() {
               className="ms-1"
               size="lg"
             />
-            <span className="ms-2 h5">Zühre Tuz Lambacısı</span>
+            <span className="ms-2 h5">Zühre Tuz Ürünleri</span>
           </Link>
 
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
@@ -50,11 +50,20 @@ function Header() {
               <li className="nav-item">
                 {
                  isLoggedIn&&(
-                  <Link to="/addproduct" className="nav-link" replace>
+                <Link to="/addproduct" className="nav-link" replace>
                   Ürün ekle
-                </Link>
-
-                 )
+                </Link>)
+              
+                }
+               
+              </li>
+              <li className="nav-item">
+                {
+                 isLoggedIn&&(
+                <Link to="/delete" className="nav-link" replace>
+                  Ürün Sil
+                </Link>)
+              
                 }
                
               </li>

@@ -38,3 +38,8 @@ export const loginn = (values)=>{
 
 }
 
+export const remove=async (id)=>{
+    return api.delete(`/delete/${id}`)
+
+}
+
