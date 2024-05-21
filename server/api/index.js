@@ -198,6 +198,17 @@ app.get("/api/popular",async(req,res)=>{
     res.status(400).send("hata olustu",err);
   }
 })
+
+app.delete("/api/delete/:id",async(req,res)=>{
+  try{
+    console.log("dleted proucts is ",req.params)
+    await product.deleteOne({_id:req.params.id})
+    res.status(200).send("deleted");
+  }
+  catch(err){
+    res.status(400).send("error",err);
+  }
+})
 //#endregion
 //#region images
 const imageSchema = mongoose.Schema({
