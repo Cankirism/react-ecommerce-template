@@ -64,12 +64,19 @@ function RelatedProduct(props) {
        >
          <div className="card shadow-sm">
            {percentOff}
-           <img
+           {/* <img
              className="card-img-top bg-dark cover"
              height="200"
              alt=""
              src={pr.tumbrImage}
-           />
+           /> */}
+             <img
+                className="border rounded ratio ratio-1x1"
+                alt=""
+                width={"150"}
+                height={"220"}
+                src={pr.tumbrImage}
+              />
            <div className="card-body">
              <h5 className="card-title text-center text-dark text-truncate">
               {pr.name}
