@@ -9,11 +9,13 @@ import toast, { Toaster } from "react-hot-toast";
 import { HttpStatusCode } from "axios";
 import FileBase64 from "react-file-base64";
 import { addImages } from "../api/api";
+import {useHistory} from "react-router-dom"
 const AddProduct = () => {
   const [productId, setProductId] = useState("");
   const [price, setPrice] = useState(1000);
   const [images, setImages] = useState([]);
   const [base64List,setbase64List]=useState([]);
+  const history = useHistory();
   const getImage = (img) => {
     console.log("images,", img);
     setImages(img);

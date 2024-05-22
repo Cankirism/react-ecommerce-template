@@ -5,7 +5,18 @@
     const  CartView=()=> {
         
         const context = useContext(CartContext);
-           
+        const [totalPrice,setTotalPrice]=useState(0);
+         
+        const increaseQuantity=(index)=>{
+
+            const newCartItems = [...context.cart];
+            newCartItems[index].quantity+=1;
+            context.updateCartItems(newCartItems);
+            context.calculateTotalPrice( newCartItems);
+        }
+        console.log("sepetteki ürünler",context.cart);
+       
+         
     return (
         
         <div className="card">
@@ -25,7 +36,7 @@
                     </div>
                 </div>  
                 {
-                    context.cart.map((item)=>(
+                    context.cart.map((item,index)=>(
                       
                         <div className="row border-top border-bottom">
                     <div className="row main align-items-center">
@@ -35,8 +46,10 @@
                             <div className="row">{item.name}</div>
                         </div>
                         <div className="col">
-                            <button className="btn btn-outline-dark">-</button>1
-                            <button className="btn btn-outline-dark">+</button>
+                            <a >-</a>{item.quantity}
+                            <a
+                            onClick={()=>increaseQuantity(index)}
+                            >+</a>
                           
                         </div>
                         <div className="col">{item.price} TL <span className="close" style={{color:"red"}}> Çıkar &#10005;</span></div>
@@ -57,7 +70,7 @@
                         <div className="col" style={{textAlign:"right"}}>
                           <h5>Toplam :</h5>
                         </div>
-                        <div className="col" style={{textAlign:"center"}}>&euro; 44.00 <span className="close">&#10005;</span></div>
+                        <div className="col" style={{textAlign:"center"}}> {context.totalPrice} TL <span className="close">&#10005;</span></div>
                     </div>
                 </div>
                

@@ -24,7 +24,8 @@ const context = useContext(CartContext);
     brand:"",
     price:"",
     desciption:"",
-    piece:""
+    piece:"",
+    tumbrImage:""
   });
  
 
@@ -59,7 +60,8 @@ const context = useContext(CartContext);
         brand:prd.brand,
         price:prd.price,
         description:prd.description,
-        piece:prd.piece
+        piece:prd.piece,
+        tumbrImage:prd.tumbrImage
       })
   
       setpImages(images.data.images);
@@ -174,7 +176,7 @@ const context = useContext(CartContext);
             <div className="row g-3 mb-4">
               <div className="col">
                 <button className="btn btn-outline-dark py-2 w-100"
-                onClick={()=>context.updateCart(currentProduct)}
+                onClick={()=>context.addCart(currentProduct)}
                 >
                   Sepete Ekle
                 </button>
