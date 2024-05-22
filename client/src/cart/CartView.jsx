@@ -46,10 +46,10 @@
                             <div className="row">{item.name}</div>
                         </div>
                         <div className="col">
-                            <a >-</a>{item.quantity}
+                            <a >-</a> {item.quantity}
                             <a
                             onClick={()=>increaseQuantity(index)}
-                            >+</a>
+                            > +</a>
                           
                         </div>
                         <div className="col">{item.price} TL <span className="close" style={{color:"red"}}> Çıkar &#10005;</span></div>
