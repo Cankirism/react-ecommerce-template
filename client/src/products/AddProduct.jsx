@@ -70,9 +70,13 @@ const AddProduct = () => {
            };
            console.log("product id is",productId)
             const imageResult = await addImages(productImages);
+
             
             if(imageResult.status===HttpStatusCode.Ok){
               toast.success("Ürün başarıyla eklendi.");
+              setTimeout(() => {
+                history.push("/products");
+              }, 4000);
             }
             else{
               throw new Error();

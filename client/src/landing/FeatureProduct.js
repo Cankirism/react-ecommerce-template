@@ -7,14 +7,22 @@ function FeatureProduct(props) {
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <img
+        {/* <img
           className="card-img-top bg-dark cover"
-          height="250"
+          height="300px"
+          width="400px"
           alt=""
-         
+        
           src={props.product.tumbrImage}
          
-        />
+        /> */}
+        <img
+                className="border rounded ratio ratio-1x1"
+                alt=""
+                width={"150"}
+                height={"300"}
+                src={props.product.tumbrImage}
+              />
         <div className="card-body">
           <h5 className="card-title text-center">{props.product.name}</h5>
           <p className="card-text text-center text-muted"></p>
