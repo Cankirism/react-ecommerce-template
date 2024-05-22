@@ -20,7 +20,7 @@ function FeatureProduct(props) {
                 className="border rounded ratio ratio-1x1"
                 alt=""
                 width={"150"}
-                height={"300"}
+                height={"280"}
                 src={props.product.tumbrImage}
               />
         <div className="card-body">

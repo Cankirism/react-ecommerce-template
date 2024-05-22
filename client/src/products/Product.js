@@ -30,12 +30,19 @@ const context = useContext(CartContext);
       <div className="card shadow-sm">
         <Link to={`/products/${props.product._id}`} href="!#" replace>
           {percentOff}
-          <img
+          {/* <img
             className="card-img-top bg-dark cover"
             height="200"
             alt=""
             src={props.product.tumbrImage}
-          />
+          /> */}
+           <img
+                className="border rounded ratio ratio-1x1"
+                alt=""
+                width={"150"}
+                height={"250"}
+                src={props.product.tumbrImage}
+              />
         </Link>
         <div className="card-body">
           <h5 className="card-title text-center text-dark text-truncate">
