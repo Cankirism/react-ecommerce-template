@@ -71,15 +71,15 @@ function RelatedProduct(props) {
              src={pr.tumbrImage}
            /> */}
              <img
-                className="border rounded ratio ratio-1x1"
+                className="ratio ratio-1x1"
                 alt=""
-                width={"150"}
-                height={"220"}
+                width={"30"}
+                height={"200"}
                 src={pr.tumbrImage}
               />
            <div className="card-body">
              <h5 className="card-title text-center text-dark text-truncate">
-              {pr.name}
+              {pr.name} {percentOff}
              </h5>
              <p className="card-text text-center text-muted">{
              (

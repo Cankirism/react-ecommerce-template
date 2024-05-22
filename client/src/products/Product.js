@@ -29,7 +29,7 @@ const context = useContext(CartContext);
     <div className="col">
       <div className="card shadow-sm">
         <Link to={`/products/${props.product._id}`} href="!#" replace>
-          {percentOff}
+         
           {/* <img
             className="card-img-top bg-dark cover"
             height="200"
@@ -46,7 +46,7 @@ const context = useContext(CartContext);
         </Link>
         <div className="card-body">
           <h5 className="card-title text-center text-dark text-truncate">
-            {props.product.name}
+            {props.product.name}  {percentOff}
           </h5>
           <p className="card-text text-center text-muted mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
