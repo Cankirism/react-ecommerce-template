@@ -1,4 +1,4 @@
-import BannerZero from "./banner-0.jpg";
+import BannerZero from "./banner-0.jpeg";
 import BannerOne from "./banner-1.jpg";
 import BannerTwo from "./banner-2.jpg";
 
