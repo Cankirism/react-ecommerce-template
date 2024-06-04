@@ -1,6 +1,6 @@
 import axios from 'axios';
-export const baseUrl="https://tuz-rust.vercel.app/api";
-//export const baseUrl="http://localhost:5802/api"
+//export const baseUrl="https://tuz-rust.vercel.app/api";
+export const baseUrl="http://localhost:5802/api"
 const api = axios.create({
     baseURL:baseUrl
 });
@@ -41,5 +41,9 @@ export const loginn = (values)=>{
 export const remove=async (id)=>{
     return api.delete(`/delete/${id}`)
 
+}
+
+export const countProducts =()=>{
+    return api.get("/count");
 }
 

@@ -22,17 +22,17 @@ function BannerImage(props) {
     >
       <div
         className="ratio"
-        style={{ "--bs-aspect-ratio": "50%", maxHeight: "460px" }}
+        style={{ "--bs-aspect-ratio": "100%", maxHeight: "400px" }}
       >
         <img
-          className="d-block w-100 h-100 bg-dark cover"
-          alt=""
+         // className="d-block w-100 h-100 bg-dark cover"
+         className="w-full object-contain" 
+         alt=""
           src={props.image}
         />
       </div>
       <div className="carousel-caption d-none d-lg-block">
-        <h5>Zühre Tuz Evi</h5>
-        <p>Çankırının popüler Tuz Lambas Dağıtıcısı</p>
+        
       </div>
     </div>
   );

@@ -9,12 +9,16 @@ import CartView from "./cart/CartView";
 import { useContext } from "react";
 import Login from "./login/Login.jsx";
 import DeleteProduct from "./products/DeleteProduct.jsx";
-function App() {
+import { ProductContextProvider } from "./context/ProductContextProvider.js";
+import { countProducts } from "./api/api.js";
+ function App() {
+ 
   
   return (
 
 
     <CartContextProvider>
+      <ProductContextProvider>
       <Route path="/login">
          <Login />
       </Route>
@@ -24,7 +28,11 @@ function App() {
           <ProductList />
         </Route>
         <Route path="/addproduct" exact>
-          <AddProduct />
+          
+            <AddProduct />
+
+          
+         
         </Route>
         <Route path="/products/:slug">
           <ProductDetail />
@@ -36,11 +44,21 @@ function App() {
         <DeleteProduct />
       </Route>
         <Route path="/" exact>
+         
+          <Landing  />
+
           
-          <Landing />
+          
+         
         </Route>
        
       </Template>
+      </ProductContextProvider>
+     
+
+     
+      
+     
     </CartContextProvider>
   );
 }
