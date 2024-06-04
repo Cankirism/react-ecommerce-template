@@ -19,7 +19,7 @@ const options = [
 
 ];
 app.use(options);
-app.use(express.json({ limit: '200mb' }));
+app.use(express.json({ limit: '300mb' }));
 
 const mongoDb = process.env.MONGODB_URL;
 try {
@@ -199,6 +199,20 @@ app.get("/api/popular",async(req,res)=>{
   }
 })
 
+app.get("/api/count",async(req,res)=>{
+  try{
+    const productCounts = await product.estimatedDocumentCount();
+    console.log("kayıtlı ürün sayısı",productCounts)
+    res.status(200).send({
+      count:productCounts
+    });
+
+  }
+  catch(err){
+    res.status(404).send(err);
+  }
+})
+
 app.delete("/api/delete/:id",async(req,res)=>{
   try{
     console.log("dleted proucts is ",req.params)
@@ -263,6 +277,8 @@ app.get("/api/images/:productId",async(req,res)=>{
  
 
 })
+
+
 
 //#endregion
 
