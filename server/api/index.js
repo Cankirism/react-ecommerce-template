@@ -19,7 +19,7 @@ const options = [
 
 ];
 app.use(options);
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '200mb' }));
 
 const mongoDb = process.env.MONGODB_URL;
 try {
@@ -244,6 +244,7 @@ app.post("/api/pImage",async(req,res)=>{
 
 app.get("/api/images/:productId",async(req,res)=>{
   try{
+    console.log("resimler için istek geldi ")
     const _productId = req.params.productId;
     
     let images = await image.findOne({
