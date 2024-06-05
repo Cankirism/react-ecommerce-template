@@ -15,6 +15,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState(1000);
   const [images, setImages] = useState([]);
   const [base64List,setbase64List]=useState([]);
+  const [loading,setLoading]=useState(false);
   const history = useHistory();
   const getImage = (img) => {
     console.log("images,", img);
@@ -50,6 +51,8 @@ const AddProduct = () => {
         tumbrImage:base64List[0]
       };
 
+      setLoading(true);
+
       const postProduct = async () => {
        
         try {
@@ -73,10 +76,11 @@ const AddProduct = () => {
 
             
             if(imageResult.status===HttpStatusCode.Ok){
+             setLoading(false);
               toast.success("Ürün başarıyla eklendi.");
               setTimeout(() => {
                 history.push("/products");
-              }, 4000);
+              }, 2000);
             }
             else{
               throw new Error();
@@ -99,6 +103,7 @@ const AddProduct = () => {
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
       <Toaster />
+      
       <nav aria-label="breadcrumb" className="bg-custom-light rounded mb-4">
         <ol className="breadcrumb p-3">
           <li className="breadcrumb-item">
@@ -213,8 +218,13 @@ const AddProduct = () => {
               type="button"
               className="btn btn-success btn-block"
               onClick={formik.handleSubmit}
+              disabled={loading}
+             
             >
-              İleri
+              {
+                loading?"Yükleniyor ..":"Yükle"
+              }
+            
             </button>
           </div>
         </div>
