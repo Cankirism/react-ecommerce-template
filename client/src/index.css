@@ -105,6 +105,70 @@ loader {
   animation: rotationBack 1s linear infinite;
   transform-origin: center center;
 }
+.cartt {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #fff;
+}
+.containerd {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 0 20px;
+}
+.productd {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.productd img {
+  width: 80px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.productd-info {
+  flex-grow: 1;
+}
+
+.productd-info h3 {
+  margin: 0;
+}
+
+.productd-info p {
+  margin: 5px 0;
+}
+.remove-btn {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #d32f2f;
+}
+
+.total {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.checkout-btn {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkout-btn:hover {
+  background-color: #388e3c;
+}
 
 @keyframes rotation {
   0% {

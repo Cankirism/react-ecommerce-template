@@ -29,6 +29,10 @@ body{
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 1rem;
 }
+
+
+
+
 @media(max-width:767px){
     .cart{
         padding: 4vh;
