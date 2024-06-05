@@ -51,7 +51,7 @@ const context = useContext(CartContext);
           <p className="card-text text-center text-muted mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
             <button className="btn btn-outline-dark mt-3"
-            onClick={()=>context.updateCart(props.product)}
+            onClick={()=>context.addCart(props.product)}
             >
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Sepete Ekle
             </button>

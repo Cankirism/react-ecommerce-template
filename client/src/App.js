@@ -45,7 +45,7 @@ import { countProducts } from "./api/api.js";
       </Route>
         <Route path="/" exact>
          
-          <Landing  />
+          <ProductList  />
 
           
           

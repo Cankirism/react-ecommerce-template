@@ -95,7 +95,7 @@ loader {
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
+  bottom: 30%;
   margin: auto;
   border: 4px dotted #f00;
   border-style: solid solid dotted;

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { useEffect } from "react";
 import { getTopProducts } from "../api/api";
+import Loader from "../components/Loader";
 const categories = [
   "Tuz Lambası",
   "Tuz Ürünleri"
@@ -75,7 +76,7 @@ function FilterMenuLeft() {
               type="text"
               className="form-control"
               placeholder="Min"
-              defaultValue="100000"
+              defaultValue="0"
             />
             <label htmlFor="floatingInput">En az</label>
           </div>
@@ -84,7 +85,7 @@ function FilterMenuLeft() {
               type="text"
               className="form-control"
               placeholder="Max"
-              defaultValue="500000"
+              defaultValue="5000"
             />
             <label htmlFor="floatingInput">En Çok</label>
           </div>
@@ -98,11 +99,14 @@ function FilterMenuLeft() {
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
   const [products,setProducts]=useState([]);
+ const [isLoading,setisLoading]=useState(true);
   useEffect(async()=>{
     const prdct =await getTopProducts(); 
-
+      
     setProducts(prdct.data);
     console.log("prd changed")
+    setisLoading(false);
+
 
   },[])
 
@@ -193,10 +197,10 @@ function ProductList() {
                   aria-label="Default select example"
                   defaultValue=""
                 >
-                  <option value="">All Models</option>
-                  <option value="1">iPhone X</option>
-                  <option value="2">iPhone Xs</option>
-                  <option value="3">iPhone 11</option>
+                  <option value="">Tüm Ürünler</option>
+                  <option value="1">Tuz Lambası</option>
+                  <option value="2">Tuz Ürünleri</option>
+                 
                 </select>
               </div>
               <div className="col-lg-9 col-xl-5 offset-xl-4 d-flex flex-row">
@@ -204,7 +208,7 @@ function ProductList() {
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Search products..."
+                    placeholder="Ara..."
                     aria-label="search input"
                   />
                   <button className="btn btn-outline-dark">
@@ -238,6 +242,9 @@ function ProductList() {
                 );
               })} */}
               {
+                isLoading?(<Loader/>):(
+
+
                 products.map((prd)=>{
 
                   if(viewType.grid){
@@ -253,6 +260,7 @@ function ProductList() {
 
                   
                 )
+              )
               }
             </div>
             <div className="d-flex align-items-center mt-auto">
@@ -263,7 +271,7 @@ function ProductList() {
                 <ul className="pagination my-0">
                   <li className="page-item">
                     <a className="page-link" href="!#">
-                      Previous
+                      Önceki
                     </a>
                   </li>
                   <li className="page-item">
@@ -283,7 +291,7 @@ function ProductList() {
                   </li>
                   <li className="page-item">
                     <a className="page-link" href="!#">
-                      Next
+                    Sonraki
                     </a>
                   </li>
                 </ul>
