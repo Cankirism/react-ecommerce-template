@@ -188,7 +188,7 @@ function ProductDetail() {
             <hr />
             <dl className="row">
               <dt className="col-sm-4">Kodu</dt>
-              <dd className="col-sm-8 mb-3">T{slug}</dd>
+              <dd className="col-sm-8 mb-3">{slug}</dd>
 
               <dt className="col-sm-4">Kategori</dt>
               <dd className="col-sm-8 mb-3">Tuz Lambası</dd>

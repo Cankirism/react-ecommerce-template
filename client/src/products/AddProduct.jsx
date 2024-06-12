@@ -9,7 +9,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { HttpStatusCode } from "axios";
 import FileBase64 from "react-file-base64";
 import { addImages } from "../api/api";
-import {useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom";
+import Compressor from "compressorjs"
 const AddProduct = () => {
   const [productId, setProductId] = useState("");
   const [price, setPrice] = useState(1000);
@@ -17,16 +18,36 @@ const AddProduct = () => {
   const [base64List,setbase64List]=useState([]);
   const [loading,setLoading]=useState(false);
   const history = useHistory();
-  const getImage = (img) => {
-    console.log("images,", img);
+const [compressedImages,setCompressedImages]=useState([]);
+  const getImage = async (img) => {
     setImages(img);
-    img.map((i)=>{
-      console.log(i);
-      setbase64List(arr=>[...arr,i.base64]);
+    console.log("images are",img)
+   img.map((i)=> {
+    setbase64List(arr=>[...arr,i.base64])
 
-    })
-  
+   
+   })
   };
+
+//   const compressImages =async (image)=>{
+//     console.log("resim is",image)
+//     new Compressor(image,{
+//       quality:0.8,
+//       success:(compressedResult)=>{
+//         setCompressedImages([...compressImages,compressedResult])
+// }
+
+// })
+
+//     }
+
+// compressedImages.map((i)=>{
+//   console.log(i);
+//   setbase64List(arr=>[...arr,i.base64]);
+//   console.log("resiömler sıkıştırılarak yapıldı ");
+
+//     })
+
   const formik = useFormik({
     initialValues: {
       name: "",
