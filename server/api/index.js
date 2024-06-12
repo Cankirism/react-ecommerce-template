@@ -223,6 +223,18 @@ app.delete("/api/delete/:id",async(req,res)=>{
     res.status(400).send("error",err);
   }
 })
+
+app.get("/api/productpage/:pagee",async(req,res)=>{
+  try{
+    const page = req.params.pagee;
+
+    const products = await product.find().skip((page-1)*4).limit(4);
+    res.status(200).send(products);
+  }
+  catch(err){
+    res.status(404).send("Kayıt bulunamadı");
+  }
+})
 //#endregion
 //#region images
 const imageSchema = mongoose.Schema({
