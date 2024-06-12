@@ -7,18 +7,12 @@ import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { useEffect } from "react";
 import { getTopProducts } from "../api/api";
 import Loader from "../components/Loader";
-const categories = [
-  "Tuz Lambası",
-  "Tuz Ürünleri"
-  
-];
-
- 
+import { paginateProducts } from "../api/api";
+const categories = ["Tuz Lambası", "Tuz Ürünleri"];
 
 const manufacturers = ["Zühre"];
 
 function FilterMenuLeft() {
- 
   return (
     <ul className="list-group list-group-flush rounded">
       <li className="list-group-item d-none d-lg-block">
@@ -98,17 +92,14 @@ function FilterMenuLeft() {
 
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
-  const [products,setProducts]=useState([]);
- const [isLoading,setisLoading]=useState(true);
-  useEffect(async()=>{
-    const prdct =await getTopProducts(); 
-      
-    setProducts(prdct.data);
-    console.log("prd changed")
+  const [products, setProducts] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
+  const [pageIndex, setpageIndex] = useState(1);
+  useEffect(async () => {
+    const prdct = await getPageProdcuts(pageIndex);
+    console.log("prd changed");
     setisLoading(false);
-
-
-  },[])
+  }, [pageIndex]);
 
   function changeViewType() {
     setViewType({
@@ -116,6 +107,25 @@ function ProductList() {
     });
   }
 
+  const getPageProdcuts = async (page) => {
+    try {
+      setisLoading(true);
+      const prd = await paginateProducts(page);
+      setProducts(prd.data);
+      setisLoading(false);
+    } catch (err) {
+      setProducts([]);
+    }
+  };
+  const getNext = async () => {
+    setpageIndex((prev) => prev + 1);
+   
+  };
+  const getPrevious = async () => {
+    if (pageIndex != 1) {
+      setpageIndex((prev) => prev - 1);
+    }
+  };
   return (
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
@@ -130,7 +140,6 @@ function ProductList() {
               Tüm Ürünler
             </Link>
           </li>
-         
         </ol>
       </nav>
 
@@ -165,7 +174,7 @@ function ProductList() {
                   aria-expanded="false"
                   aria-controls="collapseFilter"
                 >
-                  Filter Products
+                  Filtrele
                 </button>
               </h2>
             </div>
@@ -200,7 +209,6 @@ function ProductList() {
                   <option value="">Tüm Ürünler</option>
                   <option value="1">Tuz Lambası</option>
                   <option value="2">Tuz Ürünleri</option>
-                 
                 </select>
               </div>
               <div className="col-lg-9 col-xl-5 offset-xl-4 d-flex flex-row">
@@ -241,13 +249,11 @@ function ProductList() {
                   <ProductH key={i} percentOff={i % 4 === 0 ? 15 : null} />
                 );
               })} */}
-              {
-                isLoading?(<Loader/>):(
-
-
-                products.map((prd)=>{
-
-                  if(viewType.grid){
+              {isLoading ? (
+                <Loader />
+              ) : (
+                products.map((prd) => {
+                  if (viewType.grid) {
                     return (
                       <Product key={prd._id} percentOff="20" product={prd} />
                     );
@@ -255,13 +261,8 @@ function ProductList() {
                   return (
                     <ProductH key={prd._id} percentOff="20" product={prd} />
                   );
-
-                }
-
-                  
-                )
-              )
-              }
+                })
+              )}
             </div>
             <div className="d-flex align-items-center mt-auto">
               <span className="text-muted small d-none d-md-inline">
@@ -270,28 +271,48 @@ function ProductList() {
               <nav aria-label="Page navigation example" className="ms-auto">
                 <ul className="pagination my-0">
                   <li className="page-item">
-                    <a className="page-link" href="!#">
+                    <a
+                      className="page-link"
+                      href="!#"
+                      onClick={() => getPrevious()}
+                    >
                       Önceki
                     </a>
                   </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">
+                  <li className="page-item active">
+                    <a
+                      className="page-link"
+                      href="!#"
+                      onClick={() => getPageProdcuts(pageIndex)}
+                    >
                       1
                     </a>
                   </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="!#">
+                  <li className="page-item ">
+                    <a
+                      className="page-link"
+                      href="!#"
+                      onClick={() => getPageProdcuts(pageIndex)}
+                    >
                       2
                     </a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="!#">
+                    <a
+                      className="page-link"
+                      href="!#"
+                      onClick={() => getPageProdcuts(pageIndex)}
+                    >
                       3
                     </a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="!#">
-                    Sonraki
+                    <a
+                      className="page-link"
+                      href="!#"
+                      onClick={async () => await getNext()}
+                    >
+                      Sonraki
                     </a>
                   </li>
                 </ul>

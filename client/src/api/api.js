@@ -47,3 +47,8 @@ export const countProducts =()=>{
     return api.get("/count");
 }
 
+export const paginateProducts =(page)=>{
+    return api.get(`/productpage/${page}`);
+
+}
+

@@ -15,6 +15,7 @@ function Header() {
    const hasLoginInfo = sessionStorage.getItem("isLogged");
    if(hasLoginInfo)
     {
+      console.log("login info var")
       setIsloggedIn(true);
     }
   })
@@ -42,7 +43,7 @@ function Header() {
               className="ms-1"
               size="lg"
             />
-            <span className="ms-2 h5">Zühre Tuz Ürünleri</span>
+            <span className="ms-2">Zühre Tuz Ürünleri</span>
           </Link>
 
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>

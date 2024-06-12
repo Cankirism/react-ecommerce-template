@@ -54,9 +54,10 @@ const AddProduct = () => {
       setLoading(true);
 
       const postProduct = async () => {
-       
+    
         try {
           if(images.length===0){
+            setLoading(false);
             toast.error("Lütfen Resim Yükleyiniz");
           }
           else{

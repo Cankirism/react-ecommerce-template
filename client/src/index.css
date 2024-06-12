@@ -37,7 +37,11 @@
 .opacity-5 {
   opacity: 0.5;
 }
+.txt-color{
+  color: #B33333;
+  font-weight: bolder;
 
+}
 .image-vertical-scroller {
   overflow-y: auto;
   max-height: 600px;

@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { replace, useFormik } from "formik";
 import bcrypt from "bcryptjs-react"
 import { loginn } from "../api/api";
 import { HttpStatusCode } from "axios";
@@ -21,7 +21,7 @@ const Login = () => {
                  console.log("api result is ",apiResult);
                  if(apiResult.status===HttpStatusCode.Ok){
                     sessionStorage.setItem("isLogged",true);
-                    history.push("/");
+                    history.push("/products");
                  }
 
             }
