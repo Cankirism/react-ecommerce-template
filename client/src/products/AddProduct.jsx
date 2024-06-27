@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { productAddingSchema } from "../validation/ProductValidator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CurrencyInput from "react-currency-input-field";
 import { addProducts } from "../api/api";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,14 +11,23 @@ import FileBase64 from "react-file-base64";
 import { addImages } from "../api/api";
 import {useHistory} from "react-router-dom";
 import Compressor from "compressorjs"
+
+
+
 const AddProduct = () => {
   const [productId, setProductId] = useState("");
   const [price, setPrice] = useState(1000);
   const [images, setImages] = useState([]);
   const [base64List,setbase64List]=useState([]);
+  const [urlList,seturlList ]= useState([]);
   const [loading,setLoading]=useState(false);
   const history = useHistory();
+  let urlListesi = [];
 const [compressedImages,setCompressedImages]=useState([]);
+useEffect(()=>{
+  console.log("url listesi effected",urlList);
+},[urlList])
+
   const getImage = async (img) => {
     setImages(img);
     console.log("images are",img)
@@ -29,6 +38,18 @@ const [compressedImages,setCompressedImages]=useState([]);
    })
   };
 
+ const createUrlList = async(urls)=>{
+    //seturlList([...urlList,urls]);
+   urlListesi=[...urls];
+  }
+
+  const addImagess = async(images)=>{
+    const result =await addImages(images);
+    if(result.status===HttpStatusCode.Ok){
+      console.log("resimler yüklendi");
+      await createUrlList(result.data);
+    }
+  }
 //   const compressImages =async (image)=>{
 //     console.log("resim is",image)
 //     new Compressor(image,{
@@ -58,7 +79,7 @@ const [compressedImages,setCompressedImages]=useState([]);
      
     },
     validationSchema: productAddingSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("submitted");
       // console.log(values);
       const product = {
@@ -69,7 +90,8 @@ const [compressedImages,setCompressedImages]=useState([]);
         piece: values.piece,
         available: true,
         createdAt: Date.now(),
-        tumbrImage:base64List[0]
+        tumbrImage:"",
+        imageUrls:""
       };
 
       setLoading(true);
@@ -83,42 +105,49 @@ const [compressedImages,setCompressedImages]=useState([]);
           }
           else{
            
-            const result = await addProducts(product);
-          if (result.status === HttpStatusCode.Ok) {
-            //burda image yukleme fonksiyonu çağrılacak
+          //   const result = await addProducts(product);
+          // if (result.status === HttpStatusCode.Ok) {
+          //   //burda image yukleme fonksiyonu çağrılacak
           
-           const productImages ={
-            productId:result.data,
-            images:base64List,
-            available:true
-
-           };
-           console.log("product id is",productId)
-            const imageResult = await addImages(productImages);
-
+            const productImages ={
             
-            if(imageResult.status===HttpStatusCode.Ok){
-             setLoading(false);
-              toast.success("Ürün başarıyla eklendi.");
-              setTimeout(() => {
-                history.push("/products");
-              }, 2000);
-            }
+            images:base64List,
+            available:true };
+
+          // console.log("product id is",productId)
+            await addImagess(productImages);
+            console.log("url list is",urlList)
+              if(urlListesi.length!=0){
+                product.tumbrImage=urlListesi[0];
+                product.imageUrls=urlListesi;
+                console.log("image listesi full",urlListesi)
+                const result = await addProducts(product);
+                if(result.status===HttpStatusCode.Ok){
+                  toast.success("Ürün yüklendi");
+                  setTimeout(() => {
+                    history.push("/products");
+                    
+                  }, 2000);
+                }
+
+
+              }
+              //  setLoading(false);
+            //   toast.success("Ürün başarıyla eklendi.");
+            //   setTimeout(() => {
+            //     history.push("/products");
+            //   }, 2000);
+            
             else{
               throw new Error();
             }
          
-          } else {
-            throw new Error();
-          }
-
-          }
-          
+          } 
         } catch (err) {
           toast.error("Hata oluştu,", err);
         }
       };
-      postProduct();
+     await  postProduct();
     },
   });
   return (

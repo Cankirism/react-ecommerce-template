@@ -13,7 +13,8 @@ return api.post("/product",product);
 }
 
 export const addImages=(image)=>{
-    return api.post("/pImage",image);
+   // return api.post("/pImage",image);
+   return api.post("/imageUpload",image)
 
 }
 

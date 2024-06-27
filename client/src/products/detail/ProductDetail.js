@@ -32,10 +32,12 @@ function ProductDetail() {
   let prd = "";
   useEffect(async () => {
     await getProduct();
-    await fetchImages();
+   const images =  await getImages(slug);
     console.log("id değişti", slug);
 
     console.log("sepet", context.cart);
+    console.log("images are ",images)
+    setpImages(images.data);
     // const product = await fetchProduct(slug);
   }, [slug]);
 
@@ -72,22 +74,23 @@ function ProductDetail() {
     }
   };
 
-  const fetchImages =async ()=>{
-    try {
-      const images = await getImages(slug);
-      if(images.data==""){
-        pimages.pop();
-        setpImages(pimages=>[...pimages,prd.tumbrImage]);
-      }
-      else {
-        setpImages(images.data.images);
-      }
-    }
-    catch(err){
-      setpImages(prd.tumbrImage)
-    }
+  // const fetchImages =async ()=>{
+  //   try {
+  //     const images = await getImages(slug);
+      
+  //     if(images.data==""){
+      
+  //       setpImages(pimages=>[...pimages,prd.tumbrImage]);
+  //     }
+  //     else {
+  //       setpImages(images.data.imageUrls);
+  //     }
+  //   }
+  //   catch(err){
+  //     setpImages(prd.tumbrImage)
+  //   }
    
-  }
+  // }
 
   function changeRating(newRating) {}
 

@@ -96,10 +96,13 @@ function ProductList() {
   const [isLoading, setisLoading] = useState(true);
   const [pageIndex, setpageIndex] = useState(1);
   useEffect(async () => {
-    const prdct = await getPageProdcuts(pageIndex);
+    //const prdct = await getPageProdcuts(pageIndex);
     console.log("prd changed");
+   const prd = await getTopProducts();
+   setProducts(prd.data);
+    
     setisLoading(false);
-  }, [pageIndex]);
+  }, []);
 
   function changeViewType() {
     setViewType({
@@ -126,6 +129,8 @@ function ProductList() {
       setpageIndex((prev) => prev - 1);
     }
   };
+
+  
   return (
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
