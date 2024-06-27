@@ -6,9 +6,11 @@ const { STATUS_CODES } = require("http");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const { error } = require("console");
+const {UploadImage} = require("../utils/UploadImage")
 require("dotenv").config();
 const cors = require("cors");
-
+const receiveImage = require("../multerMid");
+const {uploadImage} = require("../utils/UploadImage"); 
 const app = express();
 const options = [
 	cors({
@@ -18,9 +20,10 @@ const options = [
 	})
 
 ];
+
 app.use(options);
 app.use(express.json({ limit: '300mb' }));
-
+ 
 const mongoDb = process.env.MONGODB_URL;
 try {
   mongoose.connect(mongoDb, {
@@ -44,7 +47,7 @@ mongoose.connection.on("connected", () => {
   bucket = new mongoose.mongo.GridFSBucket(dba, {
     bucketName: "images",
   });
-  console.log("bucket is ", bucket);
+ // console.log("bucket is ", bucket);
 });
 
 //#region upload image as base64
@@ -109,7 +112,6 @@ app.get("/image/:productId", async (req, res) => {
     imageList.map((image) => {
       console.log("image is ", image);
       console.log(image._id.toString());
-
       bucket.openDownloadStream(image._id).pipe(res);
     });
     // await bucket.openDownloadStreamByName(req.params.productId)
@@ -129,13 +131,15 @@ const productSchema = mongoose.Schema({
   available: Boolean,
   createdAt: Date,
   piece: Number,
-  tumbrImage:String
+  tumbrImage:String,
+  imageUrls:[String]
+  
 });
 const product = mongoose.model("product", productSchema);
 
 app.post("/api/product", async (req, res) => {
   try {
-   // console.log(req.body);
+    console.log(req.body);
     const addedProduct = new product(req.body);
 
    
@@ -224,6 +228,8 @@ app.delete("/api/delete/:id",async(req,res)=>{
   }
 })
 
+app.get("")
+
 app.get("/api/productpage/:pagee",async(req,res)=>{
   try{
     const page = req.params.pagee;
@@ -273,12 +279,16 @@ app.get("/api/images/:productId",async(req,res)=>{
     console.log("resimler için istek geldi ")
     const _productId = req.params.productId;
     
-    let images = await image.findOne({
-      productId:_productId
-    });
+    // let images = await image.findOne({
+    //   productId:_productId
+    // });
     //images = images.toObject();
-    console.log(images);
-    res.status(200).send(images);
+    const selectedProduct= await product.findOne({
+      _id:_productId
+    })
+    console.log("selected is ",selectedProduct);
+    console.log("imageUrl lst is",selectedProduct.imageUrls);
+    res.status(200).send(selectedProduct.imageUrls);
 
   }
   catch(err){
@@ -343,6 +353,73 @@ app.post("/api/login",async(req,res)=>{
   // const loginResult = await user.findOne({email:`${req.body.email}`,password:`${req.body.password}`})
 
 })
+//#endregion
+
+
+//#region cloudinary
+
+app.post('/api/imageUpload',async (req,res)=>{
+
+  console.log("istek gelddiiiiiii");
+receiveImage(req,res,async(err)=>{
+  if(err){
+    return res.status(404).send("hata oluştuuuu",err);
+  }
+  try{
+    let urlList = [];
+   
+    //console.log("request is ",req.body);
+    const base64List=req.body.images;
+    // base64List.map(async (base64)=>{
+    //  // console.log("base64 is ",base64)
+    //   const imageName = new Date().getTime().toString();
+    //   const result = await UploadImage(base64,imageName);
+    //   console.log("upload result is ",result)
+    //   const imageUrl = result;
+      
+    //   urlList.push(imageUrl);
+    //  console.log("resim url :",imageUrl)
+    //  console.log("url listesi",urlList);
+
+    // });
+
+    await Promise.all(
+      base64List.map(async (base64)=>{
+     // console.log("base64 is ",base64)
+      const imageName = new Date().getTime().toString();
+      const result = await UploadImage(base64,imageName);
+      console.log("upload result is ",result)
+      const imageUrl = result;
+      
+      urlList.push(imageUrl);
+     console.log("resim url :",imageUrl)
+     console.log("url listesi",urlList);
+
+    }))
+    res.status(200).send(urlList);
+    
+  //   const imageName = new Date().getTime().toString();
+  //  const url = "https://konyadogaltasevi.com/wp-content/uploads/2023/04/himalaya-tuz-tasi-somineli-lamba-konya-dogal-tas-evi-1.png"
+  //   const uploadResult = await UploadImage(req.body.base64,imageName);
+  //   const  uploadedUrl = uploadResult.optimizedUrl;
+  //   urlList.push(uploadedUrl);
+   // return res.status(200).send(uploadUrl); 
+
+  }
+  catch(err){
+    return res.status(404).send("hatauuu",err);
+  }
+ 
+})
+
+
+
+
+})
+
+
+
+
 //#endregion
 
 app.listen(5802, () => console.log("server started on port 5801"));
