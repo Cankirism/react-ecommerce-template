@@ -51,9 +51,13 @@ function Header() {
               <li className="nav-item">
                 {
                  isLoggedIn&&(
-                <Link to="/addproduct" className="nav-link" replace>
+                
+                <Link  to="/addproduct"  onClick={()=>changeNav()} className="nav-link" replace>
                   Ürün ekle
-                </Link>)
+                </Link>
+             
+              )
+
               
                 }
                
