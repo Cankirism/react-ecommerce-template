@@ -28,6 +28,7 @@ function Header() {
   }
 
   function changeNav(event) {
+    console.log("clicked");
     if (openedDrawer) {
       setOpenedDrawer(false)
     }
@@ -65,7 +66,7 @@ function Header() {
               <li className="nav-item">
                 {
                  isLoggedIn&&(
-                <Link to="/delete" className="nav-link" replace>
+                <Link to="/delete" onClick={()=>changeNav()} className="nav-link" replace>
                   Ürün Sil
                 </Link>)
               
