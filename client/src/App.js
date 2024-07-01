@@ -11,6 +11,7 @@ import Login from "./login/Login.jsx";
 import DeleteProduct from "./products/DeleteProduct.jsx";
 import { ProductContextProvider } from "./context/ProductContextProvider.js";
 import { countProducts } from "./api/api.js";
+import Admin from "./components/Admin.jsx";
  function App() {
  
   
@@ -51,6 +52,9 @@ import { countProducts } from "./api/api.js";
           
          
         </Route>
+        <Route path="/admin">
+          <Admin/>
+        </Route> 
        
       </Template>
       </ProductContextProvider>

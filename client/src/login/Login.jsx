@@ -21,7 +21,7 @@ const Login = () => {
                  console.log("api result is ",apiResult);
                  if(apiResult.status===HttpStatusCode.Ok){
                     sessionStorage.setItem("isLogged",true);
-                    history.push("/products");
+                    history.push("/admin");
                  }
 
             }
