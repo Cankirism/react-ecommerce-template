@@ -3,7 +3,7 @@ import { Link,useHistory } from "react-router-dom";
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContextProvier";
 import { useEffect } from "react";
-
+import  Image from "../logo.svg"
 function Header() {
   
   const [openedDrawer, setOpenedDrawer] = useState(false)
@@ -39,12 +39,22 @@ function Header() {
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/" onClick={changeNav}>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={["fab", "bootstrap"]}
               className="ms-1"
               size="lg"
-            />
-            <span className="ms-2">Zühre Tuz Ürünleri</span>
+            /> */}
+            
+            {/* <img src={Image} width="100" height="40" style={{objectFit:"contain"}}  /> */}
+            <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 140">
+  <text x="50" y="100" font-family="serif" font-size="84" fill="black">Zühre Tuz Ürünleri</text>
+  <line x1="70" y1="120" x2="350" y2="120" stroke="black" stroke-width="10"/>
+  <line x1="350" y1="120" x2="370" y2="160" stroke="black" stroke-width="6"/>
+  <line x1="360" y1="160" x2="390" y2="120" stroke="black" stroke-width="6"/>
+  <line x1="390" y1="120" x2="700" y2="120" stroke="black" stroke-width="10"/>
+</svg>
+            <link rel="icon" href="%PUBLIC_URL%/favicon.ico"></link>
+            {/* <span className="ms-2">Zühre Tuz Ürünleri</span> */}
           </Link>
 
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
