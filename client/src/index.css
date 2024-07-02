@@ -120,6 +120,12 @@ loader {
   margin: 100px auto;
   padding: 0 20px;
 }
+
+.containerx {
+  max-width: 100px;
+  margin:  auto;
+  padding: 0 220px;
+}
 .productd {
   display: flex;
   align-items: center;
