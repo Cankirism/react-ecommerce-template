@@ -11,7 +11,7 @@ const context = useContext(CartContext);
   if (props.percentOff && props.percentOff > 0) {
     percentOff = (
       <div
-        className="badge bg-dim py-2 text-white position-absolute"
+        className="badge bg-danger py-2 text-white position-absolute"
         style={{ top: "0.5rem", right: "0.5rem" }}
       >
        % {props.percentOff} indirimli
@@ -28,7 +28,7 @@ const context = useContext(CartContext);
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <Link to={`/products/${props.product._id}`} href="!#" replace>
+        <Link to={`/products/${props.product._id}`} state={props.product} href="!#" replace>
          
           {/* <img
             className="card-img-top bg-dark cover"
@@ -39,21 +39,21 @@ const context = useContext(CartContext);
            <img
                 className="border rounded ratio ratio-1x1"
                 alt=""
-                width={"150"}
+                width={"80"}
                 height={"250"}
                 src={props.product.tumbrImage}
               />
         </Link>
         <div className="card-body">
-          <h5 className="card-title text-center text-dark text-truncate">
+          <h6 className="card-title text-center text-dark font-weight-bold text-truncate">
             {props.product.name}  {percentOff}
-          </h5>
-          <p className="card-text text-center text-muted mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
+          </h6>
+          <p className="card-text text-center text-dark  mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
-            <button className="btn btn-outline-dark mt-3"
+            <button className="btn btn-outline-dark mt-3 bg-danger text-white"
             onClick={()=>context.addCart(props.product)}
             >
-              <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Sepete Ekle
+              <FontAwesomeIcon icon={["fas", "cart-plus"]}   /> Sepete Ekle
             </button>
           </div>
         </div>

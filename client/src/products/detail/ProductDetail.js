@@ -31,16 +31,24 @@ function ProductDetail() {
 
   let prd = "";
   useEffect(async () => {
-    await getProduct();
+    if(product ==null){
+  await getProduct();
    const images =  await getImages(slug);
     console.log("id değişti", slug);
 
     console.log("sepet", context.cart);
     console.log("images are ",images)
     setpImages(images.data);
-    // const product = await fetchProduct(slug);
+    } else {
+      await getCurrentProduct();
+
+      
+    }
+  
+    
   }, [slug]);
 
+  // call if no product id 
   const getProduct = async () => {
     try {
       console.log("product is ", product);
@@ -73,6 +81,24 @@ function ProductDetail() {
       prd = prd.data;
     }
   };
+
+
+  //call if coming from productList Page
+
+  const getCurrentProduct=async ()=>{
+    setCurrentProduct({
+      name:product.name,
+      brand:product.brand,
+      price:product.price,
+      desciption:product.desciption,
+      piece:product.piece,
+      tumbrImage:product.tumbrImage
+    
+    });
+    setpImages(product.imageUrls);
+    setSelectedImage(product.tumbrImage)
+
+  }
 
   // const fetchImages =async ()=>{
   //   try {

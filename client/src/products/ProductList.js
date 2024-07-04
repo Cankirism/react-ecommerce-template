@@ -83,7 +83,7 @@ function FilterMenuLeft() {
             />
             <label htmlFor="floatingInput">En Çok</label>
           </div>
-          <button className="btn btn-dark">Ara</button>
+          <button className="btn btn-dark bg-danger ">Ara</button>
         </div>
       </li>
     </ul>
