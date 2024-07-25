@@ -50,11 +50,17 @@ const context = useContext(CartContext);
           </h6>
           <p className="card-text text-center text-dark  mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
           <div className="d-grid d-block">
-            <button className="btn btn-outline-dark mt-3 bg-danger text-white"
-            onClick={()=>context.addCart(props.product)}
+          
+
+          <Link className="btn" to={`/products/${props.product._id}`} state={props.product}>
+          <button className="btn  btn-outline-dark w-100 mt-3 bg-danger text-white"
+           // onClick={()=>context.addCart(props.product)}
+          
             >
-              <FontAwesomeIcon icon={["fas", "cart-plus"]}   /> Sepete Ekle
+              <FontAwesomeIcon icon={["fas", "info-circle"]}   /> İncele
             </button>
+          </Link>
+            
           </div>
         </div>
       </div>

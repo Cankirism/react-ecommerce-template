@@ -40,6 +40,7 @@ function Header() {
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
       
       <div className="container">
+     
         <Link className="navbar-brand" to="/" onClick={changeNav}>
           {/* <FontAwesomeIcon
             icon={["fab", "bootstrap"]}
@@ -48,15 +49,26 @@ function Header() {
           />
           */}
           {/* <img src={Image} width="100" height="40" style={{objectFit:"contain"}}  /> */}
-          <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 250">
-<text x="180" y="100" font-family="tahoma" font-size="110" fontWeight="bold" fill="darkorange">Zühre</text>
-<line x1="100" y1="120" x2="100" y2="230" stroke="orange" stroke-width="14"/>
-<text x="120" y="200" fontFamily="serif" fontWeight="bold" fontSize="88">Tuz Ürünleri</text>
+          {/* <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 250">
+<text x="190" y="100" font-family="tahoma" font-size="110" fontWeight="bold" fill="darkorange">Zühre</text>
+<line x1="180" y="110" x2="685" y2="110" stroke="orange" strokeWidth="14" />
+<line x1="180" y1="120" x2="180" y2="230" stroke="orange" stroke-width="14"/>
+<text x="190" y="200" fontFamily="serif" fontWeight="bold" fontSize="88">Tuz Ürünleri</text>
 
-<line x1="100" y1="230" x2="640" y2="230" stroke="orange" stroke-width="14"/>
-<line x1="645" y1="230" x2="645" y2="120" stroke="orange" stroke-width="14"/>
+<line x1="180" y1="230" x2="685" y2="230" stroke="orange" stroke-width="14"/>
+<line x1="685" y1="230" x2="685" y2="120" stroke="orange" stroke-width="14"/>
 
-</svg>  
+</svg>   */}
+<svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 250">
+<text x="190" y="100" font-family="tahoma" font-size="110" fontWeight="bold" fill="darkorange">Zühre</text>
+
+
+<text x="190" y="200" fontFamily="serif" fontWeight="bold" fontSize="88">Tuz Ürünleri</text>
+<line x1="180" y1="235" x2="695" y2="235" stroke="orange" strokeWidth="24" />
+
+
+</svg> 
+
           <link rel="icon" href="%PUBLIC_URL%/favicon.ico"></link>
           {/* <span className="ms-2">Zühre Tuz Ürünleri</span> */}
         </Link>

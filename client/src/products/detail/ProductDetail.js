@@ -148,15 +148,16 @@ function ProductDetail() {
           <div className="image-vertical-scroller">
             <div className="d-flex flex-column">
               {pimages.map((image) => (
-                <a key={image._id} href="!#">
+               
                   <img
                     className={"rounded mb-2 ratio "}
-                    alt=""
+                    alt={image.name}
                     width={"70"}
                     height={"70"}
                     src={image}
+                    onClick={() => setSelectedImage(image)}
                   />
-                </a>
+              
               ))}
             </div>
           </div>
