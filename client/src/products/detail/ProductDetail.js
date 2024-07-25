@@ -123,11 +123,11 @@ function ProductDetail() {
   return (
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
-      <nav aria-label="breadcrumb" className="bg-custom-light rounded mb-4">
-        <ol className="breadcrumb p-3">
+      <nav aria-label="breadcrumb" className="bg-custom-light rounded mb-3 text-small">
+        <ol className="breadcrumb p-2 text-xs">
           <li className="breadcrumb-item">
             <Link
-              className="text-decoration-none link-secondary"
+              className="text link-secondary"
               to="/products"
             >
               Ürünler
@@ -138,7 +138,7 @@ function ProductDetail() {
               Tuz Lambaları
             </a>
           </li>
-          <li className="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active " aria-current="page">
             {currentProduct.name}
           </li>
         </ol>
@@ -198,7 +198,7 @@ function ProductDetail() {
 
         <div className="col-lg-5">
           <div className="d-flex flex-column h-100">
-            <h2 className="mb-4">{currentProduct.name}</h2>
+            <h5 className="mb-4">{currentProduct.name}</h5>
 
             <div className="row g-3 mb-4">
               <div className="col">

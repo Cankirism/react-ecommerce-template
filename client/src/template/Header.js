@@ -69,11 +69,12 @@ function Header() {
 
 </svg>  */}
 <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 250">
-<text x="190" y="150" font-family="tahoma" font-size="110" fontWeight="bold" fill="red">Zühre</text>
+<text x="190" y="150" font-family="serif" font-size="105" fontWeight="bold" fill="red">Zühre</text>
 
 
-<text x="530" y="150" fontFamily="tahoma" fontWeight="bold" fontSize="110"  fill="red">Tuz Ürünleri</text>
-<line x1="220" y1="180" x2="1200" y2="180" stroke="black" strokeWidth="8" />
+<text x="480" y="150" fontFamily="serif" fontWeight="bold" fontSize="105"  fill="red">Tuz</text>
+<text x="665" y="150" fontFamily="serif" fontWeight="bold" fontSize="105"  fill="red">Ürünleri</text>
+<line x1="220" y1="180" x2="1000" y2="180" stroke="black" strokeWidth="8" />
 <text x="220" y="250" font-family="arial" font-size="80" fontWeight="normal" fontStyle="italic" fill="black">Çankırı'nın Tuzcusu</text>
 
 </svg> 
@@ -86,7 +87,7 @@ function Header() {
 
         <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
         
-          <ul className="navbar-nav me-auto mb-lg-0">
+          <ul className="navbar-nav me-auto mb-lg-2">
          
 
 
@@ -118,9 +119,9 @@ function Header() {
           
           <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline" onClick={handleClick}>
             <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-            <span className="ms-3 badge rounded-pill bg-dark">{context.cart.length}</span>
+            <span className="ms-2 badge rounded-pill bg-dark">{context.cart.length}</span>
           </button>
-          <ul className="navbar-nav mb-2 mb-lg-0">
+          <ul className="navbar-nav mb-1 mb-lg-0">
             <li className="nav-item dropdown">
               <a
                 href="!#"
@@ -155,7 +156,7 @@ function Header() {
         <div className="d-inline-block d-lg-none">
           <button type="button" className="btn btn-outline-dark" onClick={handleClick}>
             <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-            <span className="ms-3 badge rounded-pill bg-dark">{context.cart.length}</span>
+            <span className="ms-1 badge rounded-pill bg-dark">{context.cart.length}</span>
           </button>
           <button className="navbar-toggler p-0 border-0 ms-3" type="button" onClick={toggleDrawer}>
             <span className="navbar-toggler-icon"></span>
