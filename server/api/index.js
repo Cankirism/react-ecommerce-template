@@ -387,6 +387,7 @@ receiveImage(req,res,async(err)=>{
       base64List.map(async (base64)=>{
      // console.log("base64 is ",base64)
       const imageName = new Date().getTime().toString();
+      console.log("image name is ",imageName);
       const result = await UploadImage(base64,imageName);
       console.log("upload result is ",result)
       const imageUrl = result;
