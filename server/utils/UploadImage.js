@@ -43,7 +43,7 @@ try {
 
 }
 catch(err){
-    optimizeUrl=err + process.env.API_KEY;
+    optimizeUrl=err;
     
 }
 finally{
