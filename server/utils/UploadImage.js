@@ -43,7 +43,7 @@ try {
 
 }
 catch(err){
-    optimizeUrl=err;
+    optimizeUrl="Error is "+err;
     
 }
 finally{
