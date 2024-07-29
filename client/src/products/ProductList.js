@@ -269,6 +269,12 @@ function ProductList() {
                 })
               )}
             </div>
+         
+
+            {
+            
+            /* 
+            -- pagination --
             <div className="d-flex align-items-center mt-auto">
               <span className="text-muted small d-none d-md-inline">
                 Showing 10 of 100
@@ -322,7 +328,7 @@ function ProductList() {
                   </li>
                 </ul>
               </nav>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
