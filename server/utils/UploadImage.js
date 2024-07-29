@@ -1,8 +1,8 @@
 const cloudinary = require('cloudinary').v2;
 
 module.exports.UploadImage =async (fileStream,fileName)=>{
-try {
-    let optimizeUrl="";
+
+   
     // Configuration
     cloudinary.config({ 
         cloud_name: process.env.CLOUD_NAME, 
@@ -25,7 +25,7 @@ try {
    // console.log("upload result is ",uploadResult);
     
     // Optimize delivery by resizing and applying auto-format and auto-quality
-      optimizeUrl = cloudinary.url(fileName, {
+      const optimizeUrl = cloudinary.url(fileName, {
         fetch_format: 'auto',
         quality: 'auto'
     });
@@ -39,18 +39,12 @@ try {
         width: 500,
         height: 500,
     });
+
+    return optimizeUrl;
     
 
-}
-catch(err){
-    optimizeUrl="Error is "+err;
-    
-}
-finally{
-    return optimizeUrl; 
 
-}
-    
+
    // console.log("image url is ",optimizeUrl);  
     
 };
