@@ -12,6 +12,7 @@ try {
     });
     
     // Upload an image
+    
     const uploadResult = await cloudinary
                                 .uploader
                                 .upload(fileStream,
@@ -42,7 +43,7 @@ try {
 
 }
 catch(err){
-    optimizeUrl=err;
+    optimizeUrl=err + process.env.API_KEY;
     
 }
 finally{
