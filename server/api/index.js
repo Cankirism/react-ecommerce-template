@@ -388,6 +388,7 @@ receiveImage(req,res,async(err)=>{
      // console.log("base64 is ",base64)
       const imageName = new Date().getTime().toString();
       console.log("image name is ",imageName);
+      console.log("yeni version /n");
       const result = await UploadImage(base64,imageName);
       console.log("upload result is ",result)
       const imageUrl = result;
