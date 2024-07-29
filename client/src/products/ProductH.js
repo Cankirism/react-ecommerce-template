@@ -19,7 +19,7 @@ function ProductH(props) {
 
     offPrice = (
       <>
-        <del>{price}Ks</del> {price - (props.percentOff * price) / 100}Ks
+        <del>{props.product.price+(props.product.price/5)}TL</del> {props.product.price}TL
       </>
     );
   }
@@ -31,25 +31,31 @@ function ProductH(props) {
             <Link to="/products/1" href="!#" replace>
               {percentOff}
               <img
-                className="rounded-start bg-dark cover w-100 h-100"
-                alt=""
-                src={Image}
+               // className="rounded-start bg-dark cover w-100 h-100"
+               className="border rounded ratio ratio-1x1" 
+               alt=""
+               width="50"
+               height="80"
+                src={props.product.tumbrImage}
               />
             </Link>
           </div>
           <div className="col-8">
             <div className="card-body h-100">
               <div className="d-flex flex-column h-100">
-                <h5 className="card-title text-dark text-truncate mb-1">
-                  Nillkin iPhone X cover
-                </h5>
+                <h7 className="card-title text-dark text-truncate mb-1">
+                 {props.product.name}
+                </h7>
                 <span className="card-text text-muted mb-2 flex-shrink-0">
                   {offPrice}
                 </span>
                 <div className="mt-auto d-flex">
-                  <button className="btn btn-outline-dark ms-auto">
-                    <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Add to cart
-                  </button>
+                <button className="btn  btn-outline-danger ms-auto mt-3  text-danger"
+           // onClick={()=>context.addCart(props.product)}
+          
+            >
+              <FontAwesomeIcon icon={["fas", "info-circle"]}   /> İncele
+            </button>
                 </div>
               </div>
             </div>

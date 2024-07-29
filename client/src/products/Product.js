@@ -53,7 +53,7 @@ const context = useContext(CartContext);
           
 
           <Link className="btn" to={`/products/${props.product._id}`} state={props.product}>
-          <button className="btn  btn-outline-dark w-100 mt-3 bg-danger text-white"
+          <button className="btn  btn-outline-danger w-100 mt-3  text-danger"
            // onClick={()=>context.addCart(props.product)}
           
             >
