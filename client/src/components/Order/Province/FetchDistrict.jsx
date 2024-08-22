@@ -22,8 +22,10 @@ const FetchDistrict =(props)=>{
     },[props.provinceId])
 
     const handleDistrictChange = (e)=>{
-        setSelectedOption(e.target.value);
-    props.handleChange(e.target.value.split("-")[0]);
+      const val = e.target.value.split("-");
+    
+      setSelectedOption(e.target.value);
+     props.handleChange(val[0],val[1]);
 
 
         

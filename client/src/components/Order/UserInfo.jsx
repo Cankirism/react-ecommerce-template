@@ -7,15 +7,24 @@ import FetchDistrict from "./Province/FetchDistrict";
 import FetchNeighborhoods from "./Province/FetchNeighborhoods";
 
 const UserInfo = () => {
+
+  const [province,setProvince]=useState("");
+  const [district,setDistrict]=useState("");
+  const [neighborhood,setNeighborhood]=useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    phone: "",
+    province:province,
+    district:district,
+    neighborhoods:neighborhood,
+    address:""
+
   });
 
   const [selectedProvince,setSelectedProvince]=useState(1);
   const [selectedDistrict,setSelectedDistrict]=useState(1757);
+  
 
   const [errors, setErrors] = useState({});
 
@@ -23,30 +32,47 @@ const UserInfo = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleProvinceChange =(id)=>{
+  const handleProvinceChange =(id,name)=>{
     setSelectedProvince(id);
+    setProvince(name)
+    console.log(name);
+    setFormData({...formData,["province"]:name})
   }
-  const handleDistrictChange =(id)=>{
-    setSelectedDistrict(id)
+  const handleDistrictChange =(id,name)=>{
+   
+    setSelectedDistrict(id);
+    setDistrict(name);
+    setFormData({...formData,["district"]:name})
+
+  }
+  const handleNeighborhood =(name)=>{
+    setNeighborhood(name);
+    setFormData({...formData,["neighborhoods"]:name})
+
   }
   const validate = () => {
     const errors = {};
     if (!formData.name) errors.name = "Name is required";
     if (!formData.email) errors.email = "Email is required";
+   
     else if (!/\S+@\S+\.\S+/.test(formData.email))
       errors.email = "Email is invalid";
-    if (!formData.password) errors.password = "Password is required";
-    else if (formData.password.length < 6)
-      errors.password = "Password must be at least 6 characters";
-    if (formData.password !== formData.confirmPassword)
-      errors.confirmPassword = "Passwords must match";
+    
+    if(!formData.phone) errors.phone="Phone required";
+
+    
+    else if(!(formData.phone.match('[0-9]{11}'))) errors.phone="Telefon numarasını dogru giriniz "; 
+    if(!formData.address) errors.address="Açık adresi detaylı giriniz"
     return errors;
   };
 
   const handleSubmit = (e) => {
+   
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
+     
+   
       console.log("Form data submitted:", formData);
       // Add form submission logic here (e.g., API call)
     } else {
@@ -80,19 +106,19 @@ const UserInfo = () => {
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Telefon</label>
+          <label htmlFor="phone">Telefon</label>
           <input
             type="phone"
             id="phone"
             name="phone"
-            value={formData.password}
+            value={formData.phone}
             onChange={handleChange}
           />
-          {errors.password && <span className="error">{errors.password}</span>}
+          {errors.phone && <span className="error">{errors.phone}</span>}
         </div>
-        <FetchProvince  handleChange ={(id)=>handleProvinceChange(id)}/>
-        <FetchDistrict  provinceId={selectedProvince} handleChange={(id)=>handleDistrictChange(id)}/>
-        <FetchNeighborhoods districtId={selectedDistrict} />
+        <FetchProvince  handleChange ={(id,name)=>handleProvinceChange(id,name)}/>
+        <FetchDistrict  provinceId={selectedProvince} handleChange={(id,name)=>handleDistrictChange(id,name)}/>
+        <FetchNeighborhoods districtId={selectedDistrict} handleChange={(name)=>handleNeighborhood(name)} />
        <div className="form-group">
         <label>Adres detayı belirtiniz </label>
         <textarea 
@@ -100,11 +126,14 @@ const UserInfo = () => {
         className="form-control"
         rows="5"
         name="address"
+        value={formData.address}
+        onChange={handleChange}
         placeholder="Açık adres belirtiniz. Sokak cadde semt daire no vb."
         ></textarea>
+          {errors.address && <span className="error">{errors.address}</span>}
 
        </div>
-        <button type="submit" className="submit-button">
+        <button type="submit" className="submit-button" onClick={handleSubmit}>
           Siparişi Tamamla
         </button>
       </form>

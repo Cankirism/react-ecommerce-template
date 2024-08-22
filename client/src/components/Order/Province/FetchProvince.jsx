@@ -20,10 +20,11 @@ const FetchProvince =(props)=>{
     },[])
 
     const handleProvinceChange = (e)=>{
-        console.log(e)
-        console.log(e.target.value.split("-")[1])
+       
+      const val = e.target.value.split("-");
+      console.log(val);
         setSelectedOption(e.target.value);
-       props.handleChange(e.target.value.split("-")[0]);
+       props.handleChange(val[0],val[1]);
        console.log(selectedOption)
     }
    
