@@ -23,7 +23,7 @@ function FilterMenuLeft() {
               <Link
                 key={i}
                 to="/products"
-                className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2"
+                className="btn btn-sm btn-outline-danger rounded-pill me-2 mb-2"
                 replace
               >
                 {v}

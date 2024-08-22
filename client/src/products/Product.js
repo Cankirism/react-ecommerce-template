@@ -48,7 +48,7 @@ const context = useContext(CartContext);
           <h6 className="card-title text-center text-dark font-weight-bold text-truncate">
             {props.product.name}  {percentOff}
           </h6>
-          <p className="card-text text-center text-dark  mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)} {props.product.price} TL</p>
+          <p className="card-text text-center text-dark mb-0">{(<del>{props.product.price+props.product.price/5} TL </del>)}  {props.product.price} TL</p>
           <div className="d-grid d-block">
           
 

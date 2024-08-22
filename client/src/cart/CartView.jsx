@@ -4,8 +4,10 @@
    import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { BsTrash3 } from "react-icons/bs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
    import CartContext from "../context/CartContextProvier";
+import { Link } from "react-router-dom";
     const  CartView=()=> {
         
         const context = useContext(CartContext);
@@ -100,7 +102,7 @@ import { BsTrash3 } from "react-icons/bs";
 
                         </p>
                         
-                        <button className="remove-btn">Kaldır</button>
+                        <button className="remove-btn" onClick={()=>context.removeFromCart(item)}>Kaldır</button>
                     </div>
                 </div>
 
@@ -112,7 +114,15 @@ import { BsTrash3 } from "react-icons/bs";
         </div>
         <div className="total" style={{ marginTop:"20px",textAlign:"right"}}>
             <h5>Toplam Tutar: {context.totalPrice} TL</h5>
-            <button className="checkout-btn">Ödeme Yap</button>
+            <Link className="btn" to={{pathname:'/order',state:{cart:context.cart}}}>
+          <button className="btn  btn-outline-success w-100 mt-3  text-success"
+           // onClick={()=>context.addCart(props.product)}
+          
+            >
+              <FontAwesomeIcon icon={["fas", "check"]}   /> Siparişi Onayla
+            </button>
+          </Link>
+            
         </div>
     </div>
   

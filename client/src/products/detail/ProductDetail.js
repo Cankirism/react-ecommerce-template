@@ -209,9 +209,9 @@ function ProductDetail() {
                   Sepete Ekle
                 </button>
               </div>
-              <div className="col">
-                <button className="btn btn-dark py-2 w-100">Satın al</button>
-              </div>
+              {/* <div className="col">
+                <button className="btn btn-dark py-2 w-100">Sepeti Onayla</button>
+              </div> */}
             </div>
 
             <h4 className="mb-0">Özellikleri</h4>

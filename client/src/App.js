@@ -12,6 +12,8 @@ import DeleteProduct from "./products/DeleteProduct.jsx";
 import { ProductContextProvider } from "./context/ProductContextProvider.js";
 import { countProducts } from "./api/api.js";
 import Admin from "./components/Admin.jsx";
+import OrderDetail from "./components/Order/OrderDetail.jsx";
+import Order from "./components/Order/Order.jsx";
  function App() {
  
   
@@ -24,6 +26,10 @@ import Admin from "./components/Admin.jsx";
          <Login />
       </Route>
       
+        <Route path="/order">
+        <Order />
+
+        </Route>
       <Template>
         <Route path="/products" exact>
           <ProductList />
@@ -49,9 +55,9 @@ import Admin from "./components/Admin.jsx";
           <ProductList  />
 
           
-          
-         
         </Route>
+         
+      
         <Route path="/admin">
           <Admin/>
         </Route> 

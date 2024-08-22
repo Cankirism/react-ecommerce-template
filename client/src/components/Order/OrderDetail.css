@@ -1,0 +1,87 @@
+/* src/components/OrderDetail.css */
+
+.order-detail {
+    max-width: 100%;
+   margin-left: 10%;
+   margin-right: 10%;
+   margin-top: 4%;
+ 
+    padding: 50px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .order-detail h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .order-info {
+    margin-bottom: 20px;
+  }
+  
+  .order-info p {
+    font-size: 1.1em;
+    margin: 5px 0;
+  }
+  
+  .order-items {
+    margin-bottom: 20px;
+   
+  }
+  
+  .order-items h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .item-name {
+    flex: 2;
+    
+  }
+  
+  .item-quantity, .item-price {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .order-total {
+    font-size: 1.2em;
+    font-weight: bold;
+    border-top: 2px solid #ddd;
+    padding-top: 10px;
+    margin-top: 20px;
+  }
+
+  @media (max-width:768px) {
+    .order-detail {
+        width: 90%;
+        margin: 0 auto;
+         padding: 50px;
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         background-color: #f9f9f9;
+
+    }
+    .item-name {
+        flex: 2;
+        font-size: small;
+        
+      }
+      
+      .item-quantity, .item-price {
+        flex: 1;
+        text-align: right;
+        font-size: small;
+      }
+    
+  }
+  
