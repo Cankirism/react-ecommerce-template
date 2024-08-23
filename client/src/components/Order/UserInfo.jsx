@@ -5,25 +5,27 @@ import "./UserRegister.css"; // Import the CSS file for styling
 import FetchProvince from "./Province/FetchProvince";
 import FetchDistrict from "./Province/FetchDistrict";
 import FetchNeighborhoods from "./Province/FetchNeighborhoods";
+import { postOrders, postOrdersDetail } from "../../api/api";
 
-const UserInfo = () => {
+const UserInfo = ({orders}) => {
 
-  const [province,setProvince]=useState("");
-  const [district,setDistrict]=useState("");
-  const [neighborhood,setNeighborhood]=useState("");
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    province:province,
-    district:district,
-    neighborhoods:neighborhood,
-    address:""
+    province:"",
+    district:"",
+    neighborhood:"",
+    fullAddress:"",
+    isActive:true,
+    date:Date.now()
 
   });
 
   const [selectedProvince,setSelectedProvince]=useState(1);
   const [selectedDistrict,setSelectedDistrict]=useState(1757);
+  const [selectedNeighborhood,setSelectedNeighborhood]=useState(176887);
   
 
   const [errors, setErrors] = useState({});
@@ -34,20 +36,22 @@ const UserInfo = () => {
   };
   const handleProvinceChange =(id,name)=>{
     setSelectedProvince(id);
-    setProvince(name)
-    console.log(name);
+    //setProvince(name)
+    console.log("this is user infon page, province cnanged");
     setFormData({...formData,["province"]:name})
   }
-  const handleDistrictChange =(id,name)=>{
-   
+  const handleDistrictChange =(id,ilce)=>{
+    console.log("this is user infon page, ilçe cnanged. new ilçe is",ilce);
     setSelectedDistrict(id);
-    setDistrict(name);
-    setFormData({...formData,["district"]:name})
+   // setDistrict(name);
+    //setDistrict(name);
+    setFormData({...formData,["district"]:ilce})
 
   }
   const handleNeighborhood =(name)=>{
-    setNeighborhood(name);
-    setFormData({...formData,["neighborhoods"]:name})
+    console.log("this is user infon page, mahalle cnanged");
+   // setNeighborhood(name);
+    setFormData({...formData,["neighborhood"]:name})
 
   }
   const validate = () => {
@@ -62,18 +66,40 @@ const UserInfo = () => {
 
     
     else if(!(formData.phone.match('[0-9]{11}'))) errors.phone="Telefon numarasını dogru giriniz "; 
-    if(!formData.address) errors.address="Açık adresi detaylı giriniz"
+    if(!formData.fullAddress) errors.fullAddress="Açık adresi detaylı giriniz"
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const sendOrders =async(data)=>{
+    const result = await postOrders(data);
+    if(result){
+     // alert(result.data.id);
+   await postOrderDetail();
+
+    }
+    else {
+      alert(result.data.message);
+    }
+
+  }
+
+  const postOrderDetail =async()=>{
+    if(orders){
+     
+
+    }
+
+     
+  }
+  
+  const handleSubmit = async (e) => {
    
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
      
-   
-      console.log("Form data submitted:", formData);
+       await sendOrders(formData);
+      
       // Add form submission logic here (e.g., API call)
     } else {
       setErrors(validationErrors);
@@ -122,15 +148,15 @@ const UserInfo = () => {
        <div className="form-group">
         <label>Adres detayı belirtiniz </label>
         <textarea 
-        id="address"
+        id="fullAddress"
         className="form-control"
         rows="5"
-        name="address"
-        value={formData.address}
+        name="fullAddress"
+        value={formData.fullAddress}
         onChange={handleChange}
         placeholder="Açık adres belirtiniz. Sokak cadde semt daire no vb."
         ></textarea>
-          {errors.address && <span className="error">{errors.address}</span>}
+          {errors.fullAddress && <span className="error">{errors.fullAddress}</span>}
 
        </div>
         <button type="submit" className="submit-button" onClick={handleSubmit}>

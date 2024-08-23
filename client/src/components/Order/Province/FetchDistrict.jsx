@@ -12,7 +12,9 @@ const FetchDistrict =(props)=>{
             const result = await fetchDistrictsofProvince(props.provinceId);
           
             if(result){
+
            setDistricts(result.data.districts)
+           props.handleChange(result.data.districts[0].id,result.data.districts[0].name);
             }
         }
 
@@ -22,6 +24,7 @@ const FetchDistrict =(props)=>{
     },[props.provinceId])
 
     const handleDistrictChange = (e)=>{
+      console.log("merhaba handle change methodundan geliyorum district")
       const val = e.target.value.split("-");
     
       setSelectedOption(e.target.value);

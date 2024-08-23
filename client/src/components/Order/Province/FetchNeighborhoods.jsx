@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {  fetchDistrictsofProvince, fetchNeighborhoods, fetchProvinces } from "../../../api/api";
 import "../UserRegister.css"
-const FetchNeighborhoods =({districtId})=>{
+const FetchNeighborhoods =(props)=>{
     const [neigborhoods,setNeighborhods] = useState([
        
     ]);
@@ -9,9 +9,11 @@ const FetchNeighborhoods =({districtId})=>{
     useEffect(()=>{
        
         const getNeighborhoods =async ()=>{
-            const result = await fetchNeighborhoods(districtId);
+            const result = await fetchNeighborhoods(props.districtId);
           
             if(result){
+              props.handleChange(result.data.neigborhoods[0].name);
+
            setNeighborhods(result.data.neigborhoods)
             }
         }
@@ -19,10 +21,12 @@ const FetchNeighborhoods =({districtId})=>{
         getNeighborhoods();
              
 
-    },[districtId])
+    },[props.districtId])
 
     const handleNeghbordhoodChange = (e)=>{
         setSelectedOption(e.target.value);
+        props.handleChange(e.target.value);
+
 
     }
     return (
