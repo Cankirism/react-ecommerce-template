@@ -137,9 +137,12 @@ function ProductDetail() {
             </Link>
           </li>
           <li className="breadcrumb-item">
-            <a className="text-decoration-none link-secondary" href="!#">
+          <Link
+              className="text link-secondary"
+              to="/products"
+            >
               Tuz Lambaları
-            </a>
+            </Link>
           </li>
           <li className="breadcrumb-item active " aria-current="page">
             {currentProduct.name}

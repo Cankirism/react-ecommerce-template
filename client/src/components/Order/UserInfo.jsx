@@ -24,7 +24,7 @@ const UserInfo = ({ orders }) => {
   const [selectedDistrict, setSelectedDistrict] = useState(1757);
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(176887);
   const [order, setOrder] = useState([]);
-
+  const [loading,setLoading]=useState(false);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -105,15 +105,22 @@ const UserInfo = ({ orders }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
+    
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       const result = await sendOrders(formData);
       console.log("result is ",result);
       if (result && result.data.status === "success") {
+      
        toast.success("Siparişiniz başarıyla alındı")
+       setLoading(false);
+     
       } else {
         toast.error("Hata. Lütfen tekrar deneyiniz")
+        setLoading(false);
+       
       }
 
       // Add form submission logic here (e.g., API call)
@@ -185,9 +192,10 @@ const UserInfo = ({ orders }) => {
             <span className="error">{errors.fullAddress}</span>
           )}
         </div>
-        <button type="submit" className="submit-button" onClick={handleSubmit}>
-          Siparişi Tamamla
-        </button>
+         <button type="submit" disabled={loading} className="submit-button" onClick={handleSubmit}>
+            {loading?"İşlem Yapılıyor ...":"Siparişi Tamamla"}
+          </button>
+        
       </form>
     </div>
   );
