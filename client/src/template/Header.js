@@ -69,11 +69,8 @@ function Header() {
 
 </svg>  */}
 <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 250">
-<text x="190" y="150" font-family="serif" font-size="105" fontWeight="bold" fill="red">Zühre</text>
+<text x="190" y="150" font-family="serif" font-size="105" fontWeight="bold" fill="red">Zühre Tuz Ürünleri</text>
 
-
-<text x="480" y="150" fontFamily="serif" fontWeight="bold" fontSize="105"  fill="red">Tuz</text>
-<text x="665" y="150" fontFamily="serif" fontWeight="bold" fontSize="105"  fill="red">Ürünleri</text>
 <line x1="220" y1="180" x2="1000" y2="180" stroke="black" strokeWidth="8" />
 <text x="220" y="250" font-family="arial" font-size="80" fontWeight="normal" fontStyle="italic" fill="black">Çankırı'nın Tuzcusu</text>
 

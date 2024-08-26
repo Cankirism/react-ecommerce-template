@@ -8,6 +8,7 @@ export const CartContextProvider = ({ children }) => {
   const addCart = (item) => {
     const updatedCart = [...cart, { ...item, quantity: 1 }];
     setCart(updatedCart);
+    console.log("eklenen is ",item)
     calculateTotalPrice(updatedCart);
   };
 

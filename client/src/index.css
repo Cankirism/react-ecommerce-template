@@ -130,6 +130,8 @@ loader {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+
 }
 .header-phone {
   border:1px solid
@@ -144,14 +146,22 @@ loader {
 
 .productd-info {
   flex-grow: 1;
+ 
 }
 
 .productd-info h3 {
   margin: 0;
+  
+}
+.productd-info h5 {
+  font-size: medium;
+  font-weight: 600;
+  
 }
 
 .productd-info p {
   margin: 5px 0;
+
 }
 .remove-btn {
   background-color: #f44336;
@@ -160,6 +170,8 @@ loader {
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: smaller;
+  margin-bottom: 2px;
 }
 
 .remove-btn:hover {

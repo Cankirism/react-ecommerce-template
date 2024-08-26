@@ -86,7 +86,7 @@ import { Link } from "react-router-dom";
         
     // </div>
     <div className="containerd ">
-        <h5> Sepetteki Ürünler</h5>
+        <h6> Sepetteki Ürünler</h6>
         <div className="cartt">
             {
                 context.cart.map((item,index)=>(
@@ -110,9 +110,7 @@ import { Link } from "react-router-dom";
                 ))
             }
            
-
-        </div>
-        <div className="total" style={{ marginTop:"20px",textAlign:"right"}}>
+           <div className="total" style={{ marginTop:"20px",textAlign:"right"}}>
             <h5>Toplam Tutar: {context.totalPrice} TL</h5>
             <Link className="btn" to={{pathname:'/order',state:{cart:context.cart}}}>
           <button className="btn  btn-outline-success w-100 mt-3  text-success"
@@ -124,6 +122,8 @@ import { Link } from "react-router-dom";
           </Link>
             
         </div>
+        </div>
+       
     </div>
   
     );

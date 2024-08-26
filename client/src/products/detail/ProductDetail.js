@@ -27,6 +27,7 @@ function ProductDetail() {
     desciption: "",
     piece: "",
     tumbrImage: "",
+    id:""
   });
 
   let prd = "";
@@ -70,6 +71,7 @@ function ProductDetail() {
         description: prd.description,
         piece: prd.piece,
         tumbrImage: prd.tumbrImage,
+        id:prd._id
       });
 
     
@@ -92,7 +94,8 @@ function ProductDetail() {
       price:product.price,
       desciption:product.desciption,
       piece:product.piece,
-      tumbrImage:product.tumbrImage
+      tumbrImage:product.tumbrImage,
+      id:product._id
     
     });
     setpImages(product.imageUrls);
