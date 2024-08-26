@@ -541,6 +541,30 @@ app.post("/api/order",async(req,res)=>{
 
 })
 
+
+app.get("/api/allOrders",async(req,res)=>{
+  try{
+    const orders = await Order.find().sort({ $natural: -1 });
+  if(orders){
+    res.status(200).send({
+      orders:orders
+    })
+  }else {
+    throw err;
+  }
+
+  }
+  catch(err){
+    res.status(400).send({
+      status:"error",
+      message:err.message
+    })
+  }
+  
+
+
+})
+
 //#endregion
 
 //#region orderDetail
