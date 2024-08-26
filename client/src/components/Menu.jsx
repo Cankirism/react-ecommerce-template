@@ -8,6 +8,7 @@ const Menu =()=>{
         { id: 2, title: 'Ürün Sil', link: '/#/delete' },
         { id: 3, title: 'Ürün Düzenle', link: '/services' },
         { id: 4, title: 'İletişim', link: '/contact' },
+        {id:5,title:"Siparişler",link:'/#/allOrders'}
       ]);
 
     return (

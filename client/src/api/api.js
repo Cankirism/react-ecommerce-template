@@ -1,6 +1,6 @@
 import axios from 'axios';
-export const baseUrl="https://tuz-rust.vercel.app/api";
-//export const baseUrl="http://localhost:5802/api"
+//export const baseUrl="https://tuz-rust.vercel.app/api";
+export const baseUrl="http://localhost:5802/api"
 //export const baseurl="https://www.zuhretuzurunleri.com/"
 const api = axios.create({
     baseURL:baseUrl
@@ -71,5 +71,9 @@ export const postOrders =async(orders)=>{
 }
 export const postOrdersDetail = async(ordersDetail)=>{
     return api.post("/orderDetail",ordersDetail);
+}
+
+export const allOrders = async()=>{
+    return api.get("/allOrders");
 }
 
