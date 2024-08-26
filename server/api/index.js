@@ -15,6 +15,7 @@ const { ProvinceFetcher } = require("../utils/ProvinceFetcher");
 const { Neighborhoods } = require("../utils/NeighborhoodFetcher");
 const { Districts } = require("../utils/DistrictFetcher");
 
+
 const app = express();
 const options = [
   cors({
@@ -490,6 +491,109 @@ const getNeighborhoods = async (distritId) => {
  
 };
 
+//#endregion
+
+//#region  order
+
+const orderSchema = mongoose.Schema({
+  name:String,
+  email:String,
+  phone:String,
+  province:String,
+  district:String,
+  neighborhood:String,
+  fullAddress:String,
+  isActive:Boolean,
+  date:Date
+})
+
+const Order = mongoose.model("orders",orderSchema);
+
+app.post("/api/order",async(req,res)=>{
+  try{
+    const orderBody= req.body;
+    console.log("order is",req.body);
+    
+    const newOrder = new Order(orderBody);
+    let result = await newOrder.save();
+    result = result.toObject();
+  if(result){
+    res.status(200).send({
+      status:"success",
+      orderId:result._id
+     })
+
+  }
+  else {
+    throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
+
+  }
+  
+  
+    
+  }
+  catch(err){
+    res.status(400).send({
+      status:"error",
+     message:err.message
+    })
+  }
+
+})
+
+//#endregion
+
+//#region orderDetail
+
+const orderDetailModel = {
+  productId:String,
+  productName:String,
+  quantity:Number,
+  price:Number
+
+}
+const orderDetailSchema = mongoose.Schema({
+ 
+  orderId:String,
+  orders:[orderDetailModel],
+  sum:Number,
+  status:String,
+  cargoName:String,
+  cargoCode:String,
+  isActive:Boolean,
+  date:Date
+
+});
+
+const OrderDetail = mongoose.model("OrderDetail",orderDetailSchema);
+
+app.post("/api/orderDetail",async(req,res)=>{
+ try{
+  console.log(req.body)
+  const orderDetailBody = req.body;
+  const newOrderDetail = new OrderDetail(orderDetailBody);
+  let result = await newOrderDetail.save();
+  result = result.toObject();
+  if(result){
+    res.status(200).send({
+      status:"success",
+      result : result._id
+    })
+  }
+  else {
+    throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
+
+  }
+ 
+ }
+ catch(err){
+  res.status(400).send({
+    status:"error",
+    message:err.message
+  })
+ }
+
+});
 //#endregion
 
 app.listen(5802, () => console.log("server started on port 5801"));
