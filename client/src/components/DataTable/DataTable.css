@@ -44,4 +44,10 @@
   .data-table button {
     font-size: smaller;
   }
+
+  @media (max-width:767px){
+    
+
+    
+  }
   
