@@ -18,6 +18,7 @@ const UserInfo = ({ orders }) => {
     fullAddress: "",
     isActive: true,
     date: Date.now(),
+    summary:""
   });
 
   const [selectedProvince, setSelectedProvince] = useState(1);
@@ -191,6 +192,30 @@ const UserInfo = ({ orders }) => {
           {errors.fullAddress && (
             <span className="error">{errors.fullAddress}</span>
           )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="payingMethod">Ödeme Yöntemi</label>
+          <input
+            type="payingMethod"
+            id="payingMethod"
+            name="payingMethod"
+            value="Kapıda Ödeme"
+            disabled
+          />
+          {errors.phone && <span className="error">{errors.phone}</span>}
+        </div>
+        <div className="form-group">
+          <label>Açıklama </label>
+          <textarea
+            id="summary"
+            className="form-control"
+            rows="5"
+            name="summary"
+            value={formData.summary}
+            onChange={handleChange}
+            placeholder="Açıklama giriniz .."
+          ></textarea>
+         
         </div>
          <button type="submit" disabled={loading} className="submit-button" onClick={handleSubmit}>
             {loading?"İşlem Yapılıyor ...":"Siparişi Tamamla"}

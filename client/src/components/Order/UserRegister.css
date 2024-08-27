@@ -94,6 +94,7 @@
   font-size: small;
   margin-bottom: 5px;
   line-height: normal;
+  min-height: 40px;
  
   
 
@@ -138,6 +139,13 @@
   font-size: small;
 
 }
+.user-register h6 {
+  font-size: 0.8em;
+  margin-bottom: 5px;
+  text-align:start;
+  font-weight: normal;
+}
+
 
   
 }

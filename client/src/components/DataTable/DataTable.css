@@ -2,12 +2,14 @@
     max-width: 100%;
     overflow-x: auto;
     padding: 1em;
-    margin-top: 40px;
+    margin-top: 4px;
+    margin-left: 5%;
+   
    
   }
   
   .data-table {
-    width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
     font-family: Arial, sans-serif;
@@ -18,6 +20,8 @@
     border: 1px solid #ddd;
     padding: 0.75em;
     text-align: left;
+    font-size: small;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   .data-table th {
@@ -35,5 +39,9 @@
   .data-table-container .p {
     font-size: 100px;
 
+  }
+
+  .data-table button {
+    font-size: smaller;
   }
   

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-
+import "./Menu.css"
 
 const Menu =()=>{
     const [menuItems, setMenuItems] = useState([
@@ -12,8 +12,8 @@ const Menu =()=>{
       ]);
 
     return (
-        <div className="p-4 my-5"> 
-             <nav >
+        <div className="sidebar"> 
+             
         <ul>
           {menuItems.map(item => (
             <li key={item.id}>
@@ -21,7 +21,7 @@ const Menu =()=>{
             </li>
           ))}
         </ul>
-      </nav>
+      
 
         </div>
        

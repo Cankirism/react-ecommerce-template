@@ -1,0 +1,20 @@
+.sidebar {
+     padding: 15px;
+    margin-top: 4%;
+     width: 100%;
+  min-height: 100vh; 
+
+    color:white;
+    background-color:orangered;
+    border-radius: 8px; 
+
+}
+.sidebar ul li a {
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+}
+.sidebar ul {
+    padding-top: 20px;
+    color:white
+}

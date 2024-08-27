@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./DataTable.css"
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Button } from 'react-bootstrap';
 
 const DataTable = ({ data,headers }) => {
    const [orders,setOrders]=useState(data);
@@ -21,6 +23,9 @@ const DataTable = ({ data,headers }) => {
                 <th>{header}</th>
             ))
            }
+           <th>
+            İşlem
+           </th>
 
           </tr>
         </thead>
@@ -31,6 +36,14 @@ const DataTable = ({ data,headers }) => {
               <td>{row.name}</td>
               <td>{row.phone}</td>
               <td>{row.date}</td>
+              <td>{row.province}</td>
+              <td>{row.district}</td>
+              <td>{row.neighborhood}</td>
+              <td>
+                <Link to={`/orderDetail/${row._id}`}>
+                <button className='btn btn-outline-success'>Detay</button>
+                </Link>
+              </td>
 
             </tr>
           ))}

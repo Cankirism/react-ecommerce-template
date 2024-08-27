@@ -1,0 +1,27 @@
+.container-order {
+    display:flex;
+    justify-content:space-between;
+    margin-top: 5%;
+    max-width: 100%;
+}
+
+.column-order-left {
+    flex:1;
+    box-sizing: border-box;
+   
+   
+   /* Space around columns */
+    background-color: #f4f4f4; /* Background color for columns */
+max-width: 15%;
+
+}
+.column-order-right{
+    flex:1;
+  
+   box-sizing: border-box;
+
+    /* Space around columns */
+    background-color: #f4f4f4; /* Background color for columns */
+max-width: 100%;
+
+}

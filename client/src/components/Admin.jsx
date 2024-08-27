@@ -1,9 +1,18 @@
-const { default: Menu } = require("./Menu")
-
+import Menu from "./Menu/Menu";
+import "./Order/AdminOrder/OrderList.css"
 const Admin =()=>{
 
     return (
-        <Menu/>
+        <div className="container-order" >
+        <div className="column-order-left">
+        <Menu />
+
+        </div>
+        <div className="column-order-right">
+      
+
+        </div>
+    </div>
     )
 
 
