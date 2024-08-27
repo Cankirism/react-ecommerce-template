@@ -6,7 +6,7 @@ import "./OrderList.css"
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [headers, setHeaders] = useState([
-    "Sipariş Kodu",
+    "#",
     "Adı",
     "Telefonu",
     "Sipariş Tarihi",

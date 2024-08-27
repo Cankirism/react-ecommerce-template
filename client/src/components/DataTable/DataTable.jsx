@@ -32,7 +32,7 @@ const DataTable = ({ data,headers }) => {
         <tbody>
           {data.map((row, index) => (
             <tr key={index}>
-              <td>{row._id}</td>
+              <td>{index+1}</td>
               <td>{row.name}</td>
               <td>{row.phone}</td>
               <td>{row.date}</td>

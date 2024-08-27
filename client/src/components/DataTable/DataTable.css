@@ -46,6 +46,13 @@
   }
 
   @media (max-width:767px){
+    .data-table th, .data-table td {
+        border: 1px solid #ddd;
+        padding: 0.5em;
+        text-align: left;
+        font-size:x-small;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
     
 
     
