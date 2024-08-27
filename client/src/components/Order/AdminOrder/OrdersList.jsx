@@ -6,13 +6,13 @@ import "./OrderList.css"
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [headers, setHeaders] = useState([
-    "#",
+    "Sipariş Kodu",
     "Adı",
     "Telefonu",
     "Sipariş Tarihi",
     "Şehir",
-    "İlçe",
-    "Mahalle"
+    "İlçe"
+
   ]);
   useEffect(() => {
     const getOrders = async () => {

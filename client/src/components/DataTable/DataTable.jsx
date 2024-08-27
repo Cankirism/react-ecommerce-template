@@ -32,13 +32,14 @@ const DataTable = ({ data,headers }) => {
         <tbody>
           {data.map((row, index) => (
             <tr key={index}>
-              <td>{index+1}</td>
+              <td>{row._id}</td>
               <td>{row.name}</td>
               <td>{row.phone}</td>
-              <td>{row.date}</td>
+              <td>{row.date.split("-")[1]}-{row.date.split("-")[0]}</td>
               <td>{row.province}</td>
               <td>{row.district}</td>
-              <td>{row.neighborhood}</td>
+              
+             
               <td>
                 <Link to={`/orderDetail/${row._id}`}>
                 <button className='btn btn-outline-success'>Detay</button>
