@@ -504,7 +504,8 @@ const orderSchema = mongoose.Schema({
   neighborhood:String,
   fullAddress:String,
   isActive:Boolean,
-  date:Date
+  date:Date,
+  summary:String
 })
 
 const Order = mongoose.model("orders",orderSchema);
