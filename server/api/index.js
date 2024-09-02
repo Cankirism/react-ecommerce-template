@@ -14,8 +14,9 @@ const { uploadImage } = require("../utils/UploadImage");
 const { ProvinceFetcher } = require("../utils/ProvinceFetcher");
 const { Neighborhoods } = require("../utils/NeighborhoodFetcher");
 const { Districts } = require("../utils/DistrictFetcher");
-
-
+const { Stream } = require("stream");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const app = express();
 const options = [
   cors({
@@ -23,7 +24,7 @@ const options = [
   }),
 ];
 let allDistricts = [];
-let allNeigborhodds=[];
+let allNeigborhodds = [];
 
 app.use(options);
 app.use(express.json({ limit: "300mb" }));
@@ -424,32 +425,32 @@ app.get("/api/districts/:id", async (req, res) => {
     const id = req.params.id;
     const districts = await getDistricts(id);
     res.status(200).send({
-      status:"success",
-      districts:districts
+      status: "success",
+      districts: districts
     })
 
-    
+
   } catch (err) {
     res.status(400).send({
-      status:"error",
-      message:err.message
+      status: "error",
+      message: err.message
     })
   }
 });
 const getDistricts = async (provinceId) => {
-   const result = await Districts(provinceId);
-   if(result){
+  const result = await Districts(provinceId);
+  if (result) {
     return result.districts;
-   }
-   else throw new Error("İle ait ilçe listesi getirilemedi");
-  
-  
+  }
+  else throw new Error("İle ait ilçe listesi getirilemedi");
+
+
 };
 
 
 // app.get("/api/neghborhoods", async (req, res) => {
 //   try {
-   
+
 //   } catch (err) {
 //     res.status(400).send({
 //       status: "error",
@@ -458,167 +459,95 @@ const getDistricts = async (provinceId) => {
 //   }
 // });
 
-app.get("/api/neghborhoods/:id",async(req,res)=>{
-  try{
+app.get("/api/neghborhoods/:id", async (req, res) => {
+  try {
     const districtId = req.params.id;
     const neigborhoodsList = await getNeighborhoods(districtId);
     res.status(200).send({
-      status:"success",
-      neigborhoods:neigborhoodsList
-    })
-   }
-   
-  
-  catch(err){
-    res.status(400).send({
-      status:"error",
-      message:err.message
+      status: "success",
+      neigborhoods: neigborhoodsList
     })
   }
- 
+
+
+  catch (err) {
+    res.status(400).send({
+      status: "error",
+      message: err.message
+    })
+  }
+
 
 
 })
 
 const getNeighborhoods = async (distritId) => {
-    const district = await Neighborhoods(distritId);
-    if(district){
-      return district.neighborhoods
-    }
-    else {
-      throw new Error("İlçeye ait mahalle bilgisi bulunamadı");
-    }
- 
+  const district = await Neighborhoods(distritId);
+  if (district) {
+    return district.neighborhoods
+  }
+  else {
+    throw new Error("İlçeye ait mahalle bilgisi bulunamadı");
+  }
+
 };
 
 //#endregion
 
-//#region  order
-
-const orderSchema = mongoose.Schema({
-  name:String,
-  email:String,
-  phone:String,
-  province:String,
-  district:String,
-  neighborhood:String,
-  fullAddress:String,
-  isActive:Boolean,
-  date:Date,
-  summary:String
-})
-
-const Order = mongoose.model("orders",orderSchema);
-
-app.post("/api/order",async(req,res)=>{
-  try{
-    const orderBody= req.body;
-    console.log("order is",req.body);
-    
-    const newOrder = new Order(orderBody);
-    let result = await newOrder.save();
-    result = result.toObject();
-  if(result){
-    res.status(200).send({
-      status:"success",
-      orderId:result._id
-     })
-
-  }
-  else {
-    throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
-
-  }
-  
-  
-    
-  }
-  catch(err){
-    res.status(400).send({
-      status:"error",
-     message:err.message
-    })
-  }
-
-})
-
-
-app.get("/api/allOrders",async(req,res)=>{
-  try{
-    const orders = await Order.find().sort({ $natural: -1 });
-  if(orders){
-    res.status(200).send({
-      orders:orders
-    })
-  }else {
-    throw err;
-  }
-
-  }
-  catch(err){
-    res.status(400).send({
-      status:"error",
-      message:err.message
-    })
-  }
-  
-
-
-})
-
-//#endregion
-
-//#region orderDetail
-
-const orderDetailModel = {
-  productId:String,
-  productName:String,
-  quantity:Number,
-  price:Number
-
-}
+//#region order
 const orderDetailSchema = mongoose.Schema({
- 
-  orderId:String,
-  orders:[orderDetailModel],
-  sum:Number,
-  status:String,
-  cargoName:String,
-  cargoCode:String,
-  isActive:Boolean,
-  date:Date
-
+  productId: String,
+  productName: String,
+  piece: Number,
+  totalPrice: Number,
+  orderId: String
 });
 
-const OrderDetail = mongoose.model("OrderDetail",orderDetailSchema);
+const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
+const orderSchema = mongoose.Schema({
+  name: String,
+  phone: String,
+  email: String,
+  province: String,
+  district: String,
+  neigborhoods: String,
+  address: String,
+  isActive: Boolean,
+  status: Number
+})
+const Order = mongoose.model("order", orderSchema);
 
-app.post("/api/orderDetail",async(req,res)=>{
- try{
-  console.log(req.body)
-  const orderDetailBody = req.body;
-  const newOrderDetail = new OrderDetail(orderDetailBody);
-  let result = await newOrderDetail.save();
-  result = result.toObject();
-  if(result){
-    res.status(200).send({
-      status:"success",
-      result : result._id
+app.post("/api/order", async (req, res) => {
+  try {
+
+    const orderBody = req.body;
+    console.log("order iss ", orderBody)
+    const neworder = new Order(orderBody);
+    let result = await neworder.save();
+    result = result.toObject();
+    if (result) {
+      res.status(200).send({
+        status: "success",
+        orderId: result._id
+      })
+    }
+    throw new Error("Order kayıt edilemedi. Tekrar deneyiniz")
+
+  }
+  catch (err) {
+    res.status(400).send({
+      status: "error",
+      message: err.message
     })
   }
-  else {
-    throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
 
-  }
- 
- }
- catch(err){
-  res.status(400).send({
-    status:"error",
-    message:err.message
-  })
- }
 
-});
+})
 //#endregion
+
+
+
+
+
 
 app.listen(5802, () => console.log("server started on port 5801"));
