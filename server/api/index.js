@@ -547,7 +547,90 @@ app.post("/api/order", async (req, res) => {
 
 
 
+//#region  token operations
+// const createToken = async () => {
+
+// }
+
+// const verifyToken = async () => {
+
+// }
+
+const SECRET_KEY = "AsdMMN/)00)(..sfMEEESAA5665SD."
+const verifyUser = async (email, password) => {
+  const searchedUser = await user.findOne({ email: email });
+  if (!searchedUser) {
+    return {
+      status: "error",
+      message: "user not found"
+    }
+  }
+  if (await bcrypt.compare(password, searchedUser.password)) {
+    token = await jwt.sign({
+      id: searchedUser._id,
+      username: email,
+      type: user
+    },
+      SECRET_KEY,
+      {
+        expiresIn: '1h'
+      }
+    );
+    return {
+      status: "success",
+      accessToken: token
+    }
+  }
+
+}
+
+app.post("/api/signup", async (req, res) => {
+  try {
+    const userInfo = req.body;
+    const signupResult = await createUser(userInfo.email, userInfo.password);
+    if (signupResult) {
+      res.status(200).send({
+        status: "success",
+        id: signupResult
+      })
+    }
+    else {
+      throw new Error("Kullanıcı oluşturulamadı. Yeniden deneyinizı")
+    }
+
+  }
+  catch (err) {
+    res.status(400).send({
+      status: "error",
+      message: err.message
+    })
+
+  }
+})
+const createUser = async (email, password) => {
+
+  const saltRounds = 10;
+  const salt = await bcrypt.genSaltSync(saltRounds);
+  const passwd = await bcrypt.hashSync(password, salt);
+  const newUser = new user({
+    email: email,
+    password: passwd,
+    isActive: true
+
+  });
+  let result = await newUser.save();
+  if (result) {
+    return result.toObject()._id;
+  }
+  else {
+    throw new Error("Kullanıcı Oluştururken hata");
+  }
 
 
+
+
+}
+
+//#endregion
 
 app.listen(5802, () => console.log("server started on port 5801"));
