@@ -18,14 +18,11 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const app = express();
-const corsOptions = {
 
-  origin: "*" // Whitelist the domains you want to allow
-};
 let allDistricts = [];
 let allNeigborhodds = [];
 
-app.use(cors(corsOptions));
+app.use('*',cors());
 app.use(express.json({ limit: "300mb" }));
 
 const mongoDb = process.env.MONGODB_URL;
