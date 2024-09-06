@@ -454,12 +454,23 @@ const getNeighborhoods = async (distritId) => {
 //#endregion
 
 //#region order
+
+const orderDetailModel = {
+  productId:String,
+  productName:String,
+  quantity:Number,
+  price:Number
+
+}
 const orderDetailSchema = mongoose.Schema({
-  productId: String,
-  productName: String,
-  piece: Number,
-  totalPrice: Number,
-  orderId: String
+  orderId:String,
+  orders:[orderDetailModel],
+  sum:Number,
+  status:String,
+  cargoName:String,
+  cargoCode:String,
+  isActive:Boolean,
+  date:Date
 });
 
 const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
@@ -493,15 +504,15 @@ app.post("/api/orderDetail",async(req,res)=>{
 
 
 const orderSchema = mongoose.Schema({
-  name: String,
-  phone: String,
-  email: String,
-  province: String,
-  district: String,
-  neigborhoods: String,
-  address: String,
-  isActive: Boolean,
-  status: Number
+  name:String,
+  email:String,
+  phone:String,
+  province:String,
+  district:String,
+  neighborhood:String,
+  fullAddress:String,
+  isActive:Boolean,
+  date:Date
 })
 const Order = mongoose.model("order", orderSchema);
 
