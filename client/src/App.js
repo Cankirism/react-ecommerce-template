@@ -16,6 +16,7 @@ import OrderDetail from "./components/Order/OrderDetail.jsx";
 import Order from "./components/Order/Order.jsx";
 
 import OrdersList from "./components/Order/AdminOrder/OrdersList.jsx";
+import Authorize from "./components/Order/Authorize/Authorize.jsx";
 function App() {
   return (
     <CartContextProvider>
@@ -32,7 +33,11 @@ function App() {
             <ProductList />
           </Route>
           <Route path="/addproduct" exact>
-            <AddProduct />
+          <Authorize>
+          <AddProduct />
+
+          </Authorize>
+         
           </Route>
           <Route path="/products/:slug">
             <ProductDetail />
@@ -41,11 +46,17 @@ function App() {
             <CartView />
           </Route>
           <Route path="/delete">
-            <DeleteProduct />
+          <Authorize>
+          <DeleteProduct />
+
+          </Authorize>
+           
           </Route>
           <Route path="/allOrders">
-         
-          <OrdersList />
+         <Authorize>
+         <OrdersList />
+         </Authorize>
+          
 
         
            
@@ -55,7 +66,11 @@ function App() {
           </Route>
 
           <Route path="/admin">
-            <Admin />
+          <Authorize>
+          <Admin />
+
+          </Authorize>
+          
           </Route>
         </Template>
       </ProductContextProvider>

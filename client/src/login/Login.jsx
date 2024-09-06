@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs-react"
 import { loginn } from "../api/api";
 import { HttpStatusCode } from "axios";
 import {useHistory} from "react-router-dom"
-
+import toast,{ Toaster } from "react-hot-toast";
 const Login = () => {
   const history= useHistory();
   
@@ -14,18 +14,31 @@ const Login = () => {
         },onSubmit: async (values)=>{
             try{
                 console.log("values is ",values);
-                // const hashedPassword = await bcrypt.hashSync(values.Password);
-                // let valuess =  values;
-                //valuess.Password=hashedPassword;
-                 const apiResult =  await loginn(values);
+                if(values.Email==""||values.Password==""){
+                  toast.error("Lütfen alanları doldurunuz")
+                }
+                else {
+                  const apiResult =  await loginn(values);
                  console.log("api result is ",apiResult);
                  if(apiResult.status===HttpStatusCode.Ok){
                     sessionStorage.setItem("isLogged",true);
+                    localStorage.setItem("accessToken",apiResult.data.accessToken);
                     history.push("/admin");
                  }
+                 else {
+                   throw new Error(apiResult.data.message)
+                 }
+
+                }
+                // const hashedPassword = await bcrypt.hashSync(values.Password);
+                // let valuess =  values;
+                //valuess.Password=hashedPassword;
+                 
 
             }
-            catch(err){console.log("hata olustu",err);}
+            catch(err){
+              toast.error(err.message)
+            }
           
             
         }
@@ -34,6 +47,7 @@ const Login = () => {
     <div className="container mt-5 py-4 px-xl-5">
       <form id="loginForm" onSubmit={formik.handleSubmit}>
         <h3>Sisteme Giriş</h3>
+       <Toaster/>
         <div className="mb-3">
           <label>Email </label>
           <input
@@ -45,6 +59,7 @@ const Login = () => {
             onChange={formik.handleChange}
           />
         </div>
+        
         <div className="mb-3">
           <label>Parola</label>
           <input
