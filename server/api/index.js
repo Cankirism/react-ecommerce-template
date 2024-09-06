@@ -23,7 +23,7 @@ let allDistricts = [];
 let allNeigborhodds = [];
 const options = [
   cors({
-    origin: "http://localhost:3000",
+    origin: "*",
   }),
 ];
 app.use(options);
