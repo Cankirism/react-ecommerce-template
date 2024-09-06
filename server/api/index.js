@@ -499,6 +499,9 @@ app.post("/api/orderDetail",async(req,res)=>{
   //  })
   // }
   console.log("asd")
+  res.status(200).send({
+    status:"OK"
+  })
  
  });
 
