@@ -90,6 +90,7 @@ const UserInfo = ({ orders }) => {
   const postOrderDetail = async (id) => {
     await renewOrderDetail();
     if (order.length == orders.length) {
+     
       const orderDetailBody = {
         orderId: id,
         sum: "",

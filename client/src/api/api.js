@@ -71,6 +71,7 @@ export const postOrders =async(orders)=>{
     return api.post("/order",orders);
 }
 export const postOrdersDetail = async(ordersDetail)=>{
+   
     return api.post("/orderDetail",ordersDetail);
 }
 
