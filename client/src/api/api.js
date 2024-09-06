@@ -77,7 +77,7 @@ export const postOrders =async(orders)=>{
 }
 export const postOrdersDetail = (ordersDetail)=>{
    
-    return  api.post("/ordDetail",ordersDetail)
+    return  api.post("/orderDetail",ordersDetail)
     .catch((err)=>err.response);
 }
 
