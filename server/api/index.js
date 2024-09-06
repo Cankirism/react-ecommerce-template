@@ -82,6 +82,7 @@ const upload = multer({
 });
 
 app.post(
+  
   "/upload/image",
   upload.single("image"),
   async (req, res) => {
@@ -142,17 +143,18 @@ const productSchema = mongoose.Schema({
 const product = mongoose.model("product", productSchema);
 
 app.post("/api/product", async (req, res) => {
-  try {
-    console.log(req.body);
-    const addedProduct = new product(req.body);
-
-    let result = await addedProduct.save();
-    result = result.toObject();
-    if (result) {
-      res.status(200).send(result._id.toString());
-    } else {
-      res.status(400).send("Hata oluştu");
-    }
+    try{
+      const token = req.headers['authorization'].split(" ")[1];
+      await verifyToken(token);
+      const addedProduct = new product(req.body);
+      let result = await addedProduct.save();
+      result = result.toObject();
+      if (result) {
+       
+        res.status(200).send(result._id.toString());
+      } else {
+       throw new Error("Ürün eklenemedi")
+      }
   } catch (err) {
     console.log("hata oluştu", err);
     res.status(400).send("hata oluştu,", err);
@@ -283,50 +285,7 @@ app.get("/api/images/:productId", async (req, res) => {
 
 //#endregion
 
-//#region user
-const userSchema = mongoose.Schema({
-  email: String,
-  password: String,
-  isActive: Boolean,
-});
 
-const user = mongoose.model("users", userSchema);
-app.post("/api/user", async (req, res) => {
-  try {
-    console.log("user ekleme isteği geldi", req.body);
-    const newUser = new user(req.body);
-    let result = await newUser.save();
-    console.log(result);
-    result = result.toObject();
-    if (result) {
-      res.status(200).send("kullanıcı kaydedildi");
-    } else {
-      res.status(400).send("hata");
-    }
-  } catch (err) {
-    res.status(400).send("hata", err);
-  }
-});
-app.post("/api/login", async (req, res) => {
-  try {
-    console.log("user is ", req.body);
-
-    const loginResult = await user.findOne({
-      email: "faruk.gungor@hotmail.com",
-    });
-
-    if (loginResult) {
-      res.status(200).send("login başarılı");
-    } else {
-      res.status(400).send("username or password error");
-    }
-  } catch (err) {
-    res.status(400).send("hata", err);
-  }
-
-  // const loginResult = await user.findOne({email:`${req.body.email}`,password:`${req.body.password}`})
-});
-//#endregion
 
 //#region cloudinary
 
@@ -543,27 +502,68 @@ app.post("/api/order", async (req, res) => {
 
 
 })
+app.get("/api/allOrders",async(req,res)=>{
+  try{
+    const orders = await Order.find().sort({ $natural: -1 });
+  if(orders){
+    res.status(200).send({
+      orders:orders
+    })
+  }else {
+    throw err;
+  }
+
+  }
+  catch(err){
+    res.status(400).send({
+      status:"error",
+      message:err.message
+    })
+  }
+  
+
+
+})
 //#endregion
 
 
 
-//#region  token operations
-// const createToken = async () => {
 
-// }
+//#region user
+const userSchema = mongoose.Schema({
+  email: String,
+  password: String,
+  isActive: Boolean,
+});
 
-// const verifyToken = async () => {
+const user = mongoose.model("users", userSchema);
 
-// }
+app.post("/api/login", async (req, res) => {
+  try {
+    const {Email,Password}=req.body;
 
-const SECRET_KEY = "AsdMMN/)00)(..sfMEEESAA5665SD."
+   const isVerifiedResult = await verifyUser(Email,Password);
+
+    if (isVerifiedResult) {
+      res.status(200).send(isVerifiedResult)
+    
+    } 
+  } catch (err) {
+    res.status(400).send({
+      status:"error",
+      message:err.message
+    });
+  }
+
+  
+});
+
+const SECRET_KEY = process.env.REACT_APP_JWT_KEY;
 const verifyUser = async (email, password) => {
-  const searchedUser = await user.findOne({ email: email });
+  const searchedUser = await user.findOne({ email: email,isActive:true });
   if (!searchedUser) {
-    return {
-      status: "error",
-      message: "user not found"
-    }
+    console.error(email,"kullanıcısı bulunamadı")
+    throw new Error("User Not Found");
   }
   if (await bcrypt.compare(password, searchedUser.password)) {
     token = await jwt.sign({
@@ -581,55 +581,89 @@ const verifyUser = async (email, password) => {
       accessToken: token
     }
   }
+  else {
+    throw new Error("Username or password wrong")
+  }
 
 }
 
-app.post("/api/signup", async (req, res) => {
-  try {
-    const userInfo = req.body;
-    const signupResult = await createUser(userInfo.email, userInfo.password);
-    if (signupResult) {
-      res.status(200).send({
-        status: "success",
-        id: signupResult
-      })
-    }
-    else {
-      throw new Error("Kullanıcı oluşturulamadı. Yeniden deneyinizı")
-    }
-
-  }
-  catch (err) {
-    res.status(400).send({
-      status: "error",
-      message: err.message
-    })
-
-  }
-})
-const createUser = async (email, password) => {
-
-  const saltRounds = 10;
-  const salt = await bcrypt.genSaltSync(saltRounds);
-  const passwd = await bcrypt.hashSync(password, salt);
-  const newUser = new user({
-    email: email,
-    password: passwd,
-    isActive: true
-
-  });
-  let result = await newUser.save();
-  if (result) {
-    return result.toObject()._id;
+const verifyToken = async (token)=>{
+ await jwt.verify(token,SECRET_KEY,(error,decodedData)=>{
+  if(error){
+    throw new Error(error);
   }
   else {
-    throw new Error("Kullanıcı Oluştururken hata");
+    return decodedData;
   }
-
-
-
-
+ })
 }
+//#endregion
+
+app.get("/api/verifyToken",async(req,res)=>{
+  try {
+    const accessToken= req.headers["authorization"].split(" ")[1];
+    console.log("access token is ",accessToken)
+    if(verifyToken){
+      res.status(200).send({
+        status:"success"
+      })
+    }
+   
+  }
+  catch(err){
+    res.status(400).send({
+      status:"error",
+      message:err.message
+    })
+  }
+})
+
+// app.post("/api/signup", async (req, res) => {
+//   try {
+//     const userInfo = req.body;
+//     const signupResult = await createUser(userInfo.email, userInfo.password);
+//     if (signupResult) {
+//       res.status(200).send({
+//         status: "success",
+//         id: signupResult
+//       })
+//     }
+//     else {
+//       throw new Error("Kullanıcı oluşturulamadı. Yeniden deneyinizı")
+//     }
+
+//   }
+//   catch (err) {
+//     res.status(400).send({
+//       status: "error",
+//       message: err.message
+//     })
+
+//   }
+// })
+// const createUser = async (email, password) => {
+
+//   const saltRounds = 10;
+//   const salt = await bcrypt.genSaltSync(saltRounds);
+//   const passwd = await bcrypt.hashSync(password, salt);
+//   const newUser = new user({
+//     email: email,
+//     password: passwd,
+//     isActive: true
+
+//   });
+//   let result = await newUser.save();
+//   if (result) {
+//     return result.toObject()._id;
+//   }
+//   else {
+//     throw new Error("Kullanıcı Oluştururken hata");
+//   }
+
+
+
+
+// }
 
 //#endregion
 
