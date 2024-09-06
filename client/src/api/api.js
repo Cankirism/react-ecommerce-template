@@ -77,7 +77,7 @@ export const postOrders =async(orders)=>{
 }
 export const postOrdersDetail = async(ordersDetail)=>{
    
-    return api.post("/ordDetail",ordersDetail)
+    return await api.post("/ordDetail",ordersDetail)
     .catch((err)=>err.response);
 }
 
