@@ -21,8 +21,12 @@ const app = express();
 
 let allDistricts = [];
 let allNeigborhodds = [];
-
-app.use('*',cors());
+const options = [
+  cors({
+    origin: "*",
+  }),
+];
+app.use(options);
 app.use(express.json({ limit: "300mb" }));
 
 const mongoDb = process.env.MONGODB_URL;
@@ -448,8 +452,7 @@ const getNeighborhoods = async (distritId) => {
 };
 
 //#endregion
-
-//#region order
+//#region orderDetail
 
 const orderDetailModel = {
   productId:String,
@@ -459,6 +462,7 @@ const orderDetailModel = {
 
 }
 const orderDetailSchema = mongoose.Schema({
+ 
   orderId:String,
   orders:[orderDetailModel],
   sum:Number,
@@ -467,37 +471,44 @@ const orderDetailSchema = mongoose.Schema({
   cargoCode:String,
   isActive:Boolean,
   date:Date
+
 });
 
-const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
-app.post("/api/ordDetail",async(req,res)=>{
-  try{
-   console.log("order detail body is",req.body)
-   const orderDetailBody = req.body;
-   const newOrderDetail = new OrderDetail(orderDetailBody);
-   let result = await newOrderDetail.save();
-   result = result.toObject();
-   if(result){
-     res.status(200).send({
-       status:"success",
-       result : result._id
-     })
-   }
-   else {
-     throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
- 
-   }
- 
+const OrderDetail = mongoose.model("OrderDetail",orderDetailSchema);
+
+app.post("/api/orderDetail",async(req,res)=>{
+ try{
+  console.log(req.body)
+  const orderDetailBody = req.body;
+  const newOrderDetail = new OrderDetail(orderDetailBody);
+  let result = await newOrderDetail.save();
+  result = result.toObject();
+  if(result){
+    res.status(200).send({
+      status:"success",
+      result : result._id
+    })
   }
-  catch(err){
-   res.status(400).send({
-     status:"error",
-     message:err.message
-   })
+  else {
+    throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
+
   }
-  
  
- });
+ }
+ catch(err){
+  res.status(400).send({
+    status:"error",
+    message:err.message
+  })
+ }
+
+});
+//#endregion
+
+
+//#region order
+
+
 
 
 const orderSchema = mongoose.Schema({
