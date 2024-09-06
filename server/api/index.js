@@ -21,12 +21,8 @@ const app = express();
 
 let allDistricts = [];
 let allNeigborhodds = [];
-const options = [
-  cors({
-    origin: "*",
-  }),
-];
-app.use(options);
+
+app.use(cors());
 app.use(express.json({ limit: "300mb" }));
 
 const mongoDb = process.env.MONGODB_URL;
