@@ -8,13 +8,13 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const { error } = require("console");
 const { UploadImage } = require("../utils/UploadImage");
 require("dotenv").config();
-const cors = require("cors");
+
 const receiveImage = require("../multerMid");
 const { uploadImage } = require("../utils/UploadImage");
 const { ProvinceFetcher } = require("../utils/ProvinceFetcher");
 const { Neighborhoods } = require("../utils/NeighborhoodFetcher");
 const { Districts } = require("../utils/DistrictFetcher");
-
+const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const app = express();
