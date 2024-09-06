@@ -8,8 +8,13 @@ const api = axios.create({
 
 
 
-export  const addProducts =(product)=>{
-return api.post("/product",product);
+export  const addProducts =(product,token)=>{
+return api.post("/product",product,{
+    headers:{
+        'Authorization':`Bearer ${token}`
+    }
+
+});
 
 }
 
@@ -72,7 +77,8 @@ export const postOrders =async(orders)=>{
 }
 export const postOrdersDetail = async(ordersDetail)=>{
    
-    return api.post("/orderDetail",ordersDetail);
+    return api.post("/ordDetail",ordersDetail)
+    .catch((err)=>err.response);
 }
 
 export const allOrders = async()=>{

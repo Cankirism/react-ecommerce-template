@@ -22,6 +22,7 @@ const AddProduct = () => {
   const [urlList,seturlList ]= useState([]);
   const [loading,setLoading]=useState(false);
   const history = useHistory();
+  const token=localStorage.getItem("accessToken");  
   let urlListesi = [];
 const [compressedImages,setCompressedImages]=useState([]);
 useEffect(()=>{
@@ -121,7 +122,7 @@ useEffect(()=>{
                 product.tumbrImage=urlListesi[0];
                 product.imageUrls=urlListesi;
                 console.log("image listesi full",urlListesi)
-                const result = await addProducts(product);
+                const result = await addProducts(product,token);
                 if(result.status===HttpStatusCode.Ok){
                   toast.success("Ürün yüklendi");
                   setTimeout(() => {
