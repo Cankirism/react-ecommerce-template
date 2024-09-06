@@ -463,6 +463,35 @@ const orderDetailSchema = mongoose.Schema({
 });
 
 const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
+app.post("/api/orderDetail",async(req,res)=>{
+  try{
+   console.log(req.body)
+   const orderDetailBody = req.body;
+   const newOrderDetail = new OrderDetail(orderDetailBody);
+   let result = await newOrderDetail.save();
+   result = result.toObject();
+   if(result){
+     res.status(200).send({
+       status:"success",
+       result : result._id
+     })
+   }
+   else {
+     throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
+ 
+   }
+ 
+  }
+  catch(err){
+   res.status(400).send({
+     status:"error",
+     message:err.message
+   })
+  }
+ 
+ });
+
+
 const orderSchema = mongoose.Schema({
   name: String,
   phone: String,
