@@ -75,9 +75,9 @@ export const fetchNeighborhoods = async(districtId)=>{
 export const postOrders =async(orders)=>{
     return api.post("/order",orders);
 }
-export const postOrdersDetail = async(ordersDetail)=>{
+export const postOrdersDetail = (ordersDetail)=>{
    
-    return await api.post("/ordDetail",ordersDetail)
+    return  api.post("/ordDetail",ordersDetail)
     .catch((err)=>err.response);
 }
 
