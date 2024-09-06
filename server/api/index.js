@@ -18,11 +18,15 @@ const { Stream } = require("stream");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const app = express();
-
+const options = [
+  cors({
+    origin: "*",
+  }),
+];
 let allDistricts = [];
 let allNeigborhodds = [];
 
-app.use(cors);
+app.use(options);
 app.use(express.json({ limit: "300mb" }));
 
 const mongoDb = process.env.MONGODB_URL;
