@@ -473,7 +473,7 @@ const orderDetailSchema = mongoose.Schema({
 });
 
 const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
-app.post("/api/orderDetail",async(req,res)=>{
+app.post("/api/ordDetail",async(req,res)=>{
   try{
    console.log("order detail body is",req.body)
    const orderDetailBody = req.body;
