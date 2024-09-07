@@ -77,7 +77,11 @@ const upload = multer({
   limits: 1024 * 1024 * 5,
   storage: storage,
 });
-
+app.use("/",async(req,res)=>{
+  if(req.method==="OPTIONS"){
+    res.status(200).send();
+  }
+})
 app.post(
   
   "/upload/image",
