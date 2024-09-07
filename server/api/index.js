@@ -77,12 +77,21 @@ const upload = multer({
   limits: 1024 * 1024 * 5,
   storage: storage,
 });
-app.use("/orderDetail",async(req,res)=>{
-  if(req.method==="OPTIONS"){
-    res.status(200).send();
-    return;
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+  //intercepts OPTIONS method
+  if ('OPTIONS' === req.method) {
+    //respond with 200
+   res.status(200).send("OKK")
   }
-})
+  else {
+  //move on
+    next();
+  }
+});
 app.post(
   
   "/upload/image",
