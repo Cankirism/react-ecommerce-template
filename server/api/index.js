@@ -25,6 +25,7 @@ let allNeigborhodds = [];
 app.use(cors());
 app.use(express.json({ limit: "300mb" }));
 
+app.options('*', async (req,res) =>{ res.status(200).send("OK"); });
 const mongoDb = process.env.MONGODB_URL;
 try {
   mongoose.connect(mongoDb, {
