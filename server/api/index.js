@@ -80,6 +80,7 @@ const upload = multer({
 app.use("/orderDetail",async(req,res)=>{
   if(req.method==="OPTIONS"){
     res.status(200).send();
+    return;
   }
 })
 app.post(
