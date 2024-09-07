@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const baseUrl="https://tuz-rust.vercel.app/api";
+
 //export const baseUrl="http://localhost:5802/api"
 //export const baseurl="https://www.zuhretuzurunleri.com/"
 const api = axios.create({
@@ -73,14 +74,12 @@ export const fetchNeighborhoods = async(districtId)=>{
 }
 
 export const postOrders =async(orders)=>{
-    return api.post("/order",orders);
+    return await api.post("/order",orders);
 }
-export const postOrdersDetail = (ordersDetail)=>{
-   
-    return  api.post("/orderDetail",ordersDetail)
-    .catch((err)=>err.response);
-}
+export const sentOrderDetails = async(orders)=>{
+    return await api.post("/orderDetail",orders);
 
+}
 export const allOrders = async()=>{
     return api.get("/allOrders");
 }
