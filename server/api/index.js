@@ -83,9 +83,11 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
   //intercepts OPTIONS method
-  if ('OPTIONS' === req.method) {
+  if ( req.method==='OPTIONS') {
+    console.log("options gledi")
     //respond with 200
-   res.status(200).send("OKK")
+   res.status(200).end();
+   return
   }
   else {
   //move on
@@ -549,7 +551,11 @@ app.post("/api/order", async (req, res) => {
         orderId: result._id
       })
     }
-    throw new Error("Order kayıt edilemedi. Tekrar deneyiniz")
+    else {
+      throw new Error("Order kayıt edilemedi. Tekrar deneyiniz")
+
+    }
+ 
 
   }
   catch (err) {
