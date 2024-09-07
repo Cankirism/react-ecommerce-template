@@ -77,7 +77,7 @@ const upload = multer({
   limits: 1024 * 1024 * 5,
   storage: storage,
 });
-app.use("/",async(req,res)=>{
+app.use("/orderDetail",async(req,res)=>{
   if(req.method==="OPTIONS"){
     res.status(200).send();
   }
