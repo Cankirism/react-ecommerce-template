@@ -5,7 +5,7 @@ import "./UserRegister.css"; // Import the CSS file for styling
 import FetchProvince from "./Province/FetchProvince";
 import FetchDistrict from "./Province/FetchDistrict";
 import FetchNeighborhoods from "./Province/FetchNeighborhoods";
-import { postOrders, postOrdersDetail } from "../../api/api";
+import { postOrders,sentOrderDetails} from "../../api/api";
 import toast,{ Toaster } from "react-hot-toast";
 const UserInfo = ({ orders }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +27,7 @@ const UserInfo = ({ orders }) => {
   const [order, setOrder] = useState([]);
   const [loading,setLoading]=useState(false);
   const [errors, setErrors] = useState({});
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,10 +65,12 @@ const UserInfo = ({ orders }) => {
   };
 
   const sendOrders = async (data) => {
-    const result = await postOrders(data);
+   const result = await postOrders(data);
+    
+    
     if (result) {
-      // alert(result.data.id);
-      return await postOrderDetail(result.data.orderId);
+      console.log("order posted and order id is ",result.data.orderId)
+      return  await postOrderDetail(result.data.orderId);
     } else {
       alert(result.data.message);
     }
@@ -88,12 +91,13 @@ const UserInfo = ({ orders }) => {
   };
 
   const postOrderDetail = async (id) => {
+    console.log("this is order details and order id is",id)
     await renewOrderDetail();
     if (order.length == orders.length) {
      
       const orderDetailBody = {
         orderId: id,
-        sum: "",
+        sum: 0,
         status: "Talep Oluşturuldu",
         cargoName: "",
         cargoCode: "",
@@ -101,15 +105,16 @@ const UserInfo = ({ orders }) => {
         date: Date.now(),
         orders: order,
       };
+    //  setOrderDetail({...orderDetail,["orderId"]:id,["sum"]:0,["status"]:"",["cargoName"]:"",["cargoCode"]:""});
 
-      return await postOrdersDetail(orderDetailBody);
+     return await sentOrderDetails(orderDetailBody);
     }
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
     
-    e.preventDefault();
+   e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       const result = await sendOrders(formData);
