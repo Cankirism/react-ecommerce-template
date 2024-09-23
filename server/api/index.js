@@ -17,6 +17,10 @@ const { Districts } = require("../utils/DistrictFetcher");
 const { Stream } = require("stream");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const redis = require("redis");
+const {
+  vertical,
+} = require("@cloudinary/url-gen/qualifiers/gradientDirection");
 const app = express();
 const options = [
   cors({
@@ -28,7 +32,6 @@ let allNeigborhodds = [];
 
 app.use(options);
 app.use(express.json({ limit: "300mb" }));
-
 const mongoDb = process.env.MONGODB_URL;
 try {
   mongoose.connect(mongoDb, {
@@ -82,7 +85,6 @@ const upload = multer({
 });
 
 app.post(
-  
   "/upload/image",
   upload.single("image"),
   async (req, res) => {
@@ -143,18 +145,17 @@ const productSchema = mongoose.Schema({
 const product = mongoose.model("product", productSchema);
 
 app.post("/api/product", async (req, res) => {
-    try{
-      const token = req.headers['authorization'].split(" ")[1];
-      await verifyToken(token);
-      const addedProduct = new product(req.body);
-      let result = await addedProduct.save();
-      result = result.toObject();
-      if (result) {
-       
-        res.status(200).send(result._id.toString());
-      } else {
-       throw new Error("Ürün eklenemedi")
-      }
+  try {
+    const token = req.headers["authorization"].split(" ")[1];
+    await verifyToken(token);
+    const addedProduct = new product(req.body);
+    let result = await addedProduct.save();
+    result = result.toObject();
+    if (result) {
+      res.status(200).send(result._id.toString());
+    } else {
+      throw new Error("Ürün eklenemedi");
+    }
   } catch (err) {
     console.log("hata oluştu", err);
     res.status(400).send("hata oluştu,", err);
@@ -179,10 +180,10 @@ app.get("/api/product/:id", async (req, res) => {
 app.get("/api/allproducts", async (req, res) => {
   try {
     console.log("top siz çağrısı geldi");
-    let topSixProducts = await product.find();
-    //topSixProducts=topSixProducts.toObject();
-    console.log("top six is", topSixProducts);
-    res.status(200).send(topSixProducts);
+
+    //let topSixProducts = await product.find();
+    const allProducts = await getAllProducts();
+    res.status(200).send(allProducts.products);
   } catch (err) {
     res.status(400).send("hata olustu", err);
   }
@@ -285,8 +286,6 @@ app.get("/api/images/:productId", async (req, res) => {
 
 //#endregion
 
-
-
 //#region cloudinary
 
 app.post("/api/imageUpload", async (req, res) => {
@@ -385,27 +384,21 @@ app.get("/api/districts/:id", async (req, res) => {
     const districts = await getDistricts(id);
     res.status(200).send({
       status: "success",
-      districts: districts
-    })
-
-
+      districts: districts,
+    });
   } catch (err) {
     res.status(400).send({
       status: "error",
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 });
 const getDistricts = async (provinceId) => {
   const result = await Districts(provinceId);
   if (result) {
     return result.districts;
-  }
-  else throw new Error("İle ait ilçe listesi getirilemedi");
-
-
+  } else throw new Error("İle ait ilçe listesi getirilemedi");
 };
-
 
 // app.get("/api/neghborhoods", async (req, res) => {
 //   try {
@@ -424,31 +417,23 @@ app.get("/api/neghborhoods/:id", async (req, res) => {
     const neigborhoodsList = await getNeighborhoods(districtId);
     res.status(200).send({
       status: "success",
-      neigborhoods: neigborhoodsList
-    })
-  }
-
-
-  catch (err) {
+      neigborhoods: neigborhoodsList,
+    });
+  } catch (err) {
     res.status(400).send({
       status: "error",
-      message: err.message
-    })
+      message: err.message,
+    });
   }
-
-
-
-})
+});
 
 const getNeighborhoods = async (distritId) => {
   const district = await Neighborhoods(distritId);
   if (district) {
-    return district.neighborhoods
-  }
-  else {
+    return district.neighborhoods;
+  } else {
     throw new Error("İlçeye ait mahalle bilgisi bulunamadı");
   }
-
 };
 
 //#endregion
@@ -456,118 +441,98 @@ const getNeighborhoods = async (distritId) => {
 //#region order
 
 const orderDetailModel = {
-  productId:String,
-  productName:String,
-  quantity:Number,
-  price:Number
-
-}
+  productId: String,
+  productName: String,
+  quantity: Number,
+  price: Number,
+};
 const orderDetailSchema = mongoose.Schema({
-  orderId:String,
-  orders:[orderDetailModel],
-  sum:Number,
-  status:String,
-  cargoName:String,
-  cargoCode:String,
-  isActive:Boolean,
-  date:Date
+  orderId: String,
+  orders: [orderDetailModel],
+  sum: Number,
+  status: String,
+  cargoName: String,
+  cargoCode: String,
+  isActive: Boolean,
+  date: Date,
 });
 
 const OrderDetail = mongoose.model("orderDetail", orderDetailSchema);
-app.post("/api/orderDetail",cors(),async(req,res)=>{
-  try{
-   console.log("order detail body is",req.body)
-   const orderDetailBody = req.body;
-   const newOrderDetail = new OrderDetail(orderDetailBody);
-   let result = await newOrderDetail.save();
-   result = result.toObject();
-   if(result){
-     res.status(200).send({
-       status:"success",
-       result : result._id
-     })
-   }
-   else {
-     throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz")
- 
-   }
- 
+app.post("/api/orderDetail", cors(), async (req, res) => {
+  try {
+    console.log("order detail body is", req.body);
+    const orderDetailBody = req.body;
+    const newOrderDetail = new OrderDetail(orderDetailBody);
+    let result = await newOrderDetail.save();
+    result = result.toObject();
+    if (result) {
+      res.status(200).send({
+        status: "success",
+        result: result._id,
+      });
+    } else {
+      throw new Error("Sipariş Oluşturulamadı. Tekrar Deneyiniz");
+    }
+  } catch (err) {
+    res.status(400).send({
+      status: "error",
+      message: err.message,
+    });
   }
-  catch(err){
-   res.status(400).send({
-     status:"error",
-     message:err.message
-   })
-  }
- 
- });
-
+});
 
 const orderSchema = mongoose.Schema({
-  name:String,
-  email:String,
-  phone:String,
-  province:String,
-  district:String,
-  neighborhood:String,
-  fullAddress:String,
-  isActive:Boolean,
-  date:Date
-})
+  name: String,
+  email: String,
+  phone: String,
+  province: String,
+  district: String,
+  neighborhood: String,
+  fullAddress: String,
+  isActive: Boolean,
+  date: Date,
+});
 const Order = mongoose.model("order", orderSchema);
 
 app.post("/api/order", async (req, res) => {
   try {
-
     const orderBody = req.body;
-    console.log("order iss ", orderBody)
+    console.log("order iss ", orderBody);
     const neworder = new Order(orderBody);
     let result = await neworder.save();
     result = result.toObject();
     if (result) {
       res.status(200).send({
         status: "success",
-        orderId: result._id
-      })
+        orderId: result._id,
+      });
     }
-    throw new Error("Order kayıt edilemedi. Tekrar deneyiniz")
-
-  }
-  catch (err) {
+    throw new Error("Order kayıt edilemedi. Tekrar deneyiniz");
+  } catch (err) {
     res.status(400).send({
       status: "error",
-      message: err.message
-    })
+      message: err.message,
+    });
   }
-
-
-})
-app.get("/api/allOrders",async(req,res)=>{
-  try{
+});
+app.get("/api/allOrders", async (req, res) => {
+  try {
     const orders = await Order.find().sort({ $natural: -1 });
-  if(orders){
-    res.status(200).send({
-      orders:orders
-    })
-  }else {
-    throw err;
-  }
-
-  }
-  catch(err){
+    if (orders) {
+      res.status(200).send({
+        orders: orders,
+      });
+    } else {
+      throw err;
+    }
+  } catch (err) {
     res.status(400).send({
-      status:"error",
-      message:err.message
-    })
+      status: "error",
+      message: err.message,
+    });
   }
-  
-
-
-})
+});
 //#endregion
-
-
-
 
 //#region user
 const userSchema = mongoose.Schema({
@@ -580,83 +545,76 @@ const user = mongoose.model("users", userSchema);
 
 app.post("/api/login", async (req, res) => {
   try {
-    const {Email,Password}=req.body;
+    const { Email, Password } = req.body;
 
-   const isVerifiedResult = await verifyUser(Email,Password);
+    const isVerifiedResult = await verifyUser(Email, Password);
 
     if (isVerifiedResult) {
-      res.status(200).send(isVerifiedResult)
-    
-    } 
+      res.status(200).send(isVerifiedResult);
+    }
   } catch (err) {
     res.status(400).send({
-      status:"error",
-      message:err.message
+      status: "error",
+      message: err.message,
     });
   }
-
-  
 });
 
 const SECRET_KEY = process.env.REACT_APP_JWT_KEY;
 const verifyUser = async (email, password) => {
-  const searchedUser = await user.findOne({ email: email,isActive:true });
+  const searchedUser = await user.findOne({ email: email, isActive: true });
   if (!searchedUser) {
-    console.error(email,"kullanıcısı bulunamadı")
+    console.error(email, "kullanıcısı bulunamadı");
     throw new Error("User Not Found");
   }
   if (await bcrypt.compare(password, searchedUser.password)) {
-    token = await jwt.sign({
-      id: searchedUser._id,
-      username: email,
-      type: user
-    },
+    token = await jwt.sign(
+      {
+        id: searchedUser._id,
+        username: email,
+        type: user,
+      },
       SECRET_KEY,
       {
-        expiresIn: '1h'
+        expiresIn: "1h",
       }
     );
     return {
       status: "success",
-      accessToken: token
+      accessToken: token,
+    };
+  } else {
+    throw new Error("Username or password wrong");
+  }
+};
+
+const verifyToken = async (token) => {
+  await jwt.verify(token, SECRET_KEY, (error, decodedData) => {
+    if (error) {
+      throw new Error(error);
+    } else {
+      return decodedData;
     }
-  }
-  else {
-    throw new Error("Username or password wrong")
-  }
-
-}
-
-const verifyToken = async (token)=>{
- await jwt.verify(token,SECRET_KEY,(error,decodedData)=>{
-  if(error){
-    throw new Error(error);
-  }
-  else {
-    return decodedData;
-  }
- })
-}
+  });
+};
 //#endregion
 
-app.get("/api/verifyToken",async(req,res)=>{
+app.get("/api/verifyToken", async (req, res) => {
   try {
-    const accessToken= req.headers["authorization"].split(" ")[1];
-    console.log("access token is ",accessToken)
-    if(verifyToken){
+    const accessToken = req.headers["authorization"].split(" ")[1];
+    console.log("access token is ", accessToken);
+    if (verifyToken) {
       res.status(200).send({
-        status:"success"
-      })
+        status: "success",
+      });
     }
-   
-  }
-  catch(err){
+  } catch (err) {
     res.status(400).send({
-      status:"error",
-      message:err.message
-    })
+      status: "error",
+      message: err.message,
+    });
   }
-})
+});
 
 // app.post("/api/signup", async (req, res) => {
 //   try {
@@ -700,11 +658,49 @@ app.get("/api/verifyToken",async(req,res)=>{
 //     throw new Error("Kullanıcı Oluştururken hata");
 //   }
 
-
-
-
 // }
 
 //#endregion
 
+//#region  redis
+let client = null;
+const createClient = async () => {
+  if (client == null) {
+    client = await redis
+      .createClient({
+        password: process.env.REDIS_PASS,
+        socket: {
+          host: "redis-17765.c311.eu-central-1-1.ec2.redns.redis-cloud.com",
+          port: 17765,
+        },
+      })
+      .on("error", (err) => console.log("redis client error", err))
+      .connect();
+  }
+};
+let allProducts = [];
+const getAllProducts = async () => {
+  try {
+    await createClient();
+    let cachedProducts = await client.get("allProducts");
+    console.log(cachedProducts);
+    if (cachedProducts == null) {
+      const prd = await product.find();
+      await client.set("allProducts", JSON.stringify(prd));
+      console.log("here");
+      cachedProducts = [...prd];
+    }
+    return {
+      status: "Ok",
+      products: JSON.parse(cachedProducts),
+    };
+  } catch (err) {
+    return {
+      status: "Error",
+      message: err.message,
+    };
+  }
+};
+
+//#endregion
 app.listen(5802, () => console.log("server started on port 5801"));
