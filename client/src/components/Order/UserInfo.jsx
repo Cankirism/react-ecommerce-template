@@ -100,7 +100,7 @@ const UserInfo = ({ orders }) => {
       const orderDetailBody = {
         orderId: id,
         sum: "",
-        status: "Talep OluÅŸturuldu",
+        status: "Talep Oluşturuldu",
         cargoName: "",
         cargoCode: "",
         isActive: true,
