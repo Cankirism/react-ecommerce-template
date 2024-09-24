@@ -507,7 +507,11 @@ app.post("/api/order", async (req, res) => {
         orderId: result._id,
       });
     }
-    throw new Error("Order kayıt edilemedi. Tekrar deneyiniz");
+    else {
+      throw new Error("Order kayıt edilemedi. Tekrar deneyiniz");
+
+    }
+    
   } catch (err) {
     res.status(400).send({
       status: "error",
@@ -663,32 +667,31 @@ app.get("/api/verifyToken", async (req, res) => {
 //#endregion
 
 //#region  redis
-let client = null;
-const createClient = async () => {
-  if (client == null) {
-    client = await redis
-      .createClient({
-        password: process.env.REDIS_PASS,
-        socket: {
-          host: "redis-17765.c311.eu-central-1-1.ec2.redns.redis-cloud.com",
-          port: 17765,
-        },
-      })
-      .on("error", (err) => console.log("redis client error", err))
-      .connect();
-  }
-};
-let allProducts = [];
+let redisClient;
+(async () => {
+  redisClient = await redis
+    .createClient({
+      password: process.env.REDIS_PASS,
+      socket: {
+        host: "redis-17765.c311.eu-central-1-1.ec2.redns.redis-cloud.com",
+        port: 17765,
+      },
+    })
+    .on("error", (err) => console.log("redis client error", err))
+    await redisClient.connect();
+})();
+let cachedProducts;
 const getAllProducts = async () => {
   try {
-    await createClient();
-    let cachedProducts = await client.get("allProducts");
-    console.log(cachedProducts);
+    cachedProducts = await redisClient.get("allProducts");
     if (cachedProducts == null) {
+      console.log("not cached")
       const prd = await product.find();
-      await client.set("allProducts", JSON.stringify(prd));
-      console.log("here");
+      await redisClient.set("allProducts", JSON.stringify(prd));
       cachedProducts = [...prd];
+    }
+    else {
+      console.log("cached")
     }
     return {
       status: "Ok",
