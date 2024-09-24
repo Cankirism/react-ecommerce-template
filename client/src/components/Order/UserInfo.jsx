@@ -115,11 +115,12 @@ const UserInfo = ({ orders }) => {
 
 
   const handleSubmit = async (e) => {
-    setLoading(true);
+
     
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
+      setLoading(true);
       const result = await sendOrders(formData);
       console.log("result is ",result);
       if (result && result.data.status === "success") {
@@ -135,6 +136,7 @@ const UserInfo = ({ orders }) => {
 
       // Add form submission logic here (e.g., API call)
     } else {
+      setLoading(false);
       setErrors(validationErrors);
     }
   };
